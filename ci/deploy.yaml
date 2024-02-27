@@ -1,0 +1,42 @@
+---
+- name: "Prepare configuration template"
+  hosts: all
+  tasks:
+    - name: "Prepare pywb operation directory"
+      file:
+        dest: /home/ansible/pywb
+        state: directory
+
+    # - name: "Prepare configuration for static web."
+    #   copy:
+    #     dest: /home/ansible/seeder/static-nginx.conf
+    #     content: |
+    #       server {
+    #         location /static/ {
+    #             root /seeder;
+    #         }
+    #         location /media/ {
+    #             root /seeder;
+    #         }
+
+    #         # Increase max upload size to ~50MB
+    #         client_max_body_size 53M;
+
+    #         listen 0.0.0.0:80;
+    #       }
+
+    - name: "Deploy Docker Compose"
+      template:
+        src: docker-compose.yaml
+        dest: /home/ansible/pywb/docker-compose-{{ env }}.yaml
+
+    - name: "Deployment scripts"
+      template:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        mode: u+x
+      loop:
+        - src: run.sh
+          dest: /home/ansible/pywb/run-{{ env }}.sh
+        # - dump-screenshots.sh
+        # - update_vyvoj.sh
