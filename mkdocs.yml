@@ -1,1 +1,41 @@
-site_name: My Docs
+site_name: Nový věk zpřístupnění českého webového archivu.
+# https://squidfunk.github.io/mkdocs-material/setup/
+
+theme:
+  name: material
+  palette:
+    - primary: black
+    # Palette toggle for light mode
+    - scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.instant.progress
+    - navigation.tracking
+    # - navigation.tabs
+    # - navigation.tabs.sticky
+    # - navigation.sections
+    # - navigation.expand
+    # - navigation.path # sponsors only feature, not working for us
+    - navigation.indexes
+    - toc.follow
+    # - toc.integrate
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - search.share
+    - social
+# plugins:
+# - blog:
+#     blog_dir: News
+#     blog_toc: true
+# - tags
