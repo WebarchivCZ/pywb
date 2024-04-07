@@ -17,6 +17,12 @@ services:
 
   pywb:
     image: webrecorder/pywb:2.7.4
+    volumes:
+      - ../config.yaml:"{{ pywb_dir }}"/config.yaml
+      - ../sample-archive/:/mnt/archive/23/tests/
+      - ../index/:/mnt/archive/23/index/2023-tests.cdx
+      # - ./uwsgi_subdir.ini:/uwsgi/uwsgi.ini
+
     labels:
       - "traefik.http.routers.pywb.rule=Host(`whoami.docker.localhost`) || Host(`10.3.0.21`)"
 

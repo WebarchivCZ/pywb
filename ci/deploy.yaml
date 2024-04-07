@@ -4,7 +4,7 @@
   tasks:
     - name: "Prepare pywb operation directory"
       file:
-        dest: /home/ansible/pywb
+        dest: "{{ pywb_dir }}"
         state: directory
 
     # - name: "Prepare configuration for static web."
@@ -27,8 +27,13 @@
 
     - name: "Deploy Docker Compose"
       template:
-        src: docker-compose.yaml
-        dest: /home/ansible/pywb/docker-compose-{{ env }}.yaml
+        src: "{{ item.src }}"
+        dest: "{{ pywb_dir }}/{{ dest }}"
+      loop:
+        - src: docker-compose.yaml
+          dest: docker-compose-{{ env }}.yaml
+        - src: config.yaml
+          dest: config.yaml
 
     - name: "Deployment scripts"
       template:
@@ -37,6 +42,6 @@
         mode: u+x
       loop:
         - src: run.sh
-          dest: /home/ansible/pywb/run-{{ env }}.sh
+          dest: "{{ pywb_dir }}/run-{{ env }}.sh"
         # - dump-screenshots.sh
         # - update_vyvoj.sh
