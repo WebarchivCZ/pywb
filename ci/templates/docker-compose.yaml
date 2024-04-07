@@ -19,8 +19,10 @@ services:
     image: webrecorder/pywb:2.7.4
     volumes:
       - "{{ pywb_dir }}/config.yaml:/webarchive/config.yaml"
-      - "/mnt/archive/23/index/2023-tests.cdx:/webarchive/collections/2023-tests/indexes/2023-tests.cdx"
-      - "/mnt/archive/23/tests/:/webarchive/collections/2023-tests/archive/"
+      - "/mnt/archive/23/index/:/webarchive/collections/2023/indexes/"
+      - "/mnt/archive/23/:/webarchive/collections/2023/archive/"
+      # - "/mnt/archive/23/index/2023-tests.cdx:/webarchive/collections/2023-tests/indexes/2023-tests.cdx"
+      # - "/mnt/archive/23/tests/:/webarchive/collections/2023-tests/archive/"
 
       # - ./uwsgi_subdir.ini:/uwsgi/uwsgi.ini
 
