@@ -9,11 +9,11 @@ debug: true
 collections:
   all: $all
   live: $live
-  tests-23:
-    index_paths:
-      - ./index/
-    archive_paths:
-      - ./sample_archive/
+  # tests-23:
+  #   index_paths:
+  #     - ./index/
+  #   archive_paths:
+  #     - ./sample_archive/
 
 # acl_paths: acl
 # static_path: static
