@@ -4,6 +4,9 @@
   tasks:
     - name: "Prepare pywb operation directory"
       file:
+        become: true
+        owner: ansible
+        group: ansible
         dest: "{{ pywb_dir }}"
         state: directory
 
