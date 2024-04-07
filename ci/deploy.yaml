@@ -3,8 +3,8 @@
   hosts: all
   tasks:
     - name: "Prepare pywb operation directory"
+      become: true
       file:
-        become: true
         owner: ansible
         group: ansible
         dest: "{{ pywb_dir }}"
