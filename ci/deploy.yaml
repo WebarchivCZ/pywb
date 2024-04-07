@@ -31,7 +31,7 @@
     - name: "Deploy Docker Compose"
       template:
         src: "{{ item.src }}"
-        dest: "{{ pywb_dir }}/{{ dest }}"
+        dest: "{{ pywb_dir }}/{{ item.dest }}"
       loop:
         - src: docker-compose.yaml
           dest: docker-compose-{{ env }}.yaml
