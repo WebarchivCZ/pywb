@@ -54,7 +54,7 @@ pipeline {
             set -o pipefail # catch non-zero exit code in pipes
             # set -o xtrace # uncomment for bug hunting
 
-            ssh -o "StrictHostKeyChecking=no" -i ${SSH_CREDS} ${SSH_CREDS_USR}@10.3.0.21 sudo /home/ansible/pywb/run-test.sh
+            ssh -o "StrictHostKeyChecking=no" -i ${SSH_CREDS} ${SSH_CREDS_USR}@10.3.0.21 sudo /opt/pywb/run-test.sh
           '''
         }
       }
@@ -77,7 +77,7 @@ pipeline {
             # docker push webarchiv/seeder:latest
             # cd ci
             # ansible-playbook -i prod --private-key ${SSH_CREDS} -u ${SSH_CREDS_USR} prepare-configuration.yml
-            # ssh -o "StrictHostKeyChecking=no" -i ${SSH_CREDS} ${SSH_CREDS_USR}@10.3.0.50 sudo /home/ansible/seeder/run.sh
+            # ssh -o "StrictHostKeyChecking=no" -i ${SSH_CREDS} ${SSH_CREDS_USR}@10.3.0.50 sudo /opt/pywb/run-prod.sh
           '''
         }
       }
