@@ -46,7 +46,11 @@
       loop:
         - src: run.sh
           dest: "{{ pywb_dir }}/run-{{ env }}.sh"
-        - src: run.sh
+        - src: stop.sh
           dest: "{{ pywb_dir }}/stop-{{ env }}.sh"
+        - src: logs.sh
+          dest: "{{ pywb_dir }}/logs-{{ env }}.sh"
+        - src: exec.sh
+          dest: "{{ pywb_dir }}/exec-{{ env }}.sh"
         # - dump-screenshots.sh
         # - update_vyvoj.sh
