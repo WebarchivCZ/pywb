@@ -18,8 +18,13 @@ services:
   pywb:
     image: webrecorder/pywb:2.7.4
     volumes:
+      # - type: bind
+      #   source: "/index"
+      #   target: "/webarchive/collections/"
+      # Overwrite pywb configuration inside docker container
       - "{{ pywb_dir }}/config.yaml:/webarchive/config.yaml"
-      - "/mnt/archive/23/manuals/2023_manuals:/webarchive/collections/manuals/archive/"
+      # Add single archive to image
+      - "/mnt/archive/23/manuals/crawls/collections/:/webarchive/collections/manuals/archive/"
       # Archives
       # - "/mnt/archive/23/continuous-cov19:/webarchive/collections/2023-continuous-cov19/archive/"
       # - "/mnt/archive/23/continuous-ukrainewar:/webarchive/collections/2023-continuous-ukrainewar/archive/"
