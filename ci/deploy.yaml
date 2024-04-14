@@ -52,5 +52,7 @@
           dest: "{{ pywb_dir }}/logs-{{ env }}.sh"
         - src: exec.sh
           dest: "{{ pywb_dir }}/exec-{{ env }}.sh"
+        - src: docker.sh
+          dest: "{{ pywb_dir }}/docker-{{ env }}.sh"
         # - dump-screenshots.sh
         # - update_vyvoj.sh
