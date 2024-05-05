@@ -6,4 +6,4 @@ set -o nounset # exit when using undeclared variables
 set -o pipefail # catch non-zero exit code in pipes
 # set -o xtrace # uncomment for bug hunting
 
-docker exec -it pywb-test-pywb-1 bash
+sudo docker exec -it pywb-test-pywb-1 bash
