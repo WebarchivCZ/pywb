@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   reverse-proxy:
@@ -24,7 +24,8 @@ services:
       # Overwrite pywb configuration inside docker container
       - "{{ pywb_dir }}/config.yaml:/webarchive/config.yaml"
       # Add single archive to image
-      - "/mnt/archive/23/manuals/crawls/collections/:/webarchive/collections/"
+      # - "/mnt/archive/23/manuals/crawls/collections/:/webarchive/collections/"
+      - "/mnt/archive/23/topics/Topics-2023-07-T-APVVM:/webarchive/collections/topics/archive/"
       # Archives
       # - "/mnt/archive/23/continuous-cov19:/webarchive/collections/2023-continuous-cov19/archive/"
       # - "/mnt/archive/23/continuous-ukrainewar:/webarchive/collections/2023-continuous-ukrainewar/archive/"
@@ -51,7 +52,6 @@ services:
 
     labels:
       - "traefik.http.routers.pywb.rule=Host(`whoami.docker.localhost`) || Host(`10.3.0.21`)"
-
 
   # whoami:
   #   # A container that exposes an API to show its IP address

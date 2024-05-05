@@ -4,17 +4,21 @@
 
 debug: true
 
-# collections_root: collections
-
 collections:
   all: $all
   live: $live
+  
   # tests-23:
   #   index_paths:
   #     - ./index/
   #   archive_paths:
   #     - ./sample_archive/
 
+# collections_root: collections
+
+# Per-Collection Paths
+# archive_paths: archive
+# index_paths: indexes
 # acl_paths: acl
 # static_path: static
 
