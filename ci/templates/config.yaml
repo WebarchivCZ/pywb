@@ -3,11 +3,12 @@
 #
 
 debug: true
+autoindex: 30
 
 collections:
   all: $all
   live: $live
-  
+
   # tests-23:
   #   index_paths:
   #     - ./index/
