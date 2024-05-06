@@ -18,6 +18,14 @@ services:
   pywb:
     image: webrecorder/pywb:2.7.4
     volumes:
+      # INDEX
+      # Mount fast storage as index to each collections
+      - "/index/:/webarchive/collections/topics/indexes/"
+      - "/index/:/webarchive/collections/totals/indexes/"
+      - "/index/:/webarchive/collections/serials/indexes/"
+      # TOPICS
+      # Mount topics as archive sources
+      - "/mnt/archive/23/topics/Topics-2023-07-T-APVVM:/webarchive/collections/topics/archive/"
       # - type: bind
       #   source: "/index"
       #   target: "/webarchive/collections/"
@@ -25,7 +33,6 @@ services:
       - "{{ pywb_dir }}/config.yaml:/webarchive/config.yaml"
       # Add single archive to image
       # - "/mnt/archive/23/manuals/crawls/collections/:/webarchive/collections/"
-      - "/mnt/archive/23/topics/Topics-2023-07-T-APVVM:/webarchive/collections/topics/archive/"
       # Archives
       # - "/mnt/archive/23/continuous-cov19:/webarchive/collections/2023-continuous-cov19/archive/"
       # - "/mnt/archive/23/continuous-ukrainewar:/webarchive/collections/2023-continuous-ukrainewar/archive/"
