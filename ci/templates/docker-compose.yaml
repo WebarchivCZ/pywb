@@ -19,10 +19,11 @@ services:
     image: webrecorder/pywb:2.7.4
     volumes:
       # INDEX
+      - "/mnt/prase:/webarchive/collections/topics/indexes/"
       # Mount fast storage as index to each collections
-      - "/index/:/webarchive/collections/topics/indexes/"
-      - "/index/:/webarchive/collections/totals/indexes/"
-      - "/index/:/webarchive/collections/serials/indexes/"
+      # - "/index/:/webarchive/collections/topics/indexes/"
+      # - "/index/:/webarchive/collections/totals/indexes/"
+      # - "/index/:/webarchive/collections/serials/indexes/"
       # TOPICS
       # Mount topics as archive sources
       - "/mnt/archive/23/topics/Topics-2023-07-T-APVVM:/webarchive/collections/topics/archive/"

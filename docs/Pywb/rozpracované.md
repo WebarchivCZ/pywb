@@ -1,0 +1,44 @@
+# Rozpracované
+
+## Stav 6. Květen 2024,
+
+- Automatická Indexace: `/mnt/archive/23/topics/Topics-2023-07-T-APVVM`
+- Index: `/mnt/prase`
+
+## Stav Duben 2024
+
+[Github commit](https://github.com/WebarchivCZ/pywb/commit/bdf54dc3b2ec8d3dc85e5e0d67a8dbcbb12f302e)
+
+Ruční sklizeň - Facebook podmínky služby
+
+docker-compose konfigurace
+
+```Dockerfile
+    pywb:
+    image: webrecorder/pywb:2.7.4
+    volumes:
+
+      - "{{ pywb_dir }}/config.yaml:/webarchive/config.yaml"
+      - "/mnt/archive/23/manuals/crawls/collections/:/webarchive/collections/"
+```
+
+[Pywb UI](http://10.3.0.21:443/all/20220628154342/https://www.facebook.com/legal/terms)
+
+API Call `curl -s '10.3.0.21:443/all/cdx?url=www.facebook.com/legal/terms&output=json'` vrací
+
+```json
+{
+  "urlkey": "com,facebook)/legal/terms",
+  "timestamp": "20221209191852",
+  "url": "https://www.facebook.com/legal/terms",
+  "mime": "text/html",
+  "status": "200",
+  "digest": "GRUWGB5ZAMAPKEAC2DOOD2AEY7M6P2EZ",
+  "length": "290673",
+  "offset": "496164353",
+  "filename": "rec-20221209182111914788-65f062a0d7a3.warc.gz",
+  "source": "1222_prezident23/indexes/index.cdxj",
+  "source-coll": "1222_prezident23",
+  "access": "allow"
+}
+```
