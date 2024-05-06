@@ -26,7 +26,8 @@ services:
       # - "/index/:/webarchive/collections/serials/indexes/"
       # TOPICS
       # Mount topics as archive sources
-      - "/mnt/archive/23/topics/Topics-2023-07-T-APVVM:/webarchive/collections/topics/archive/"
+      - "/mnt/archive/23/topics/Topics-2023-07-T-APVVM:/webarchive/collections/topics/archive/23/Topics-2023-07-T-APVVM"
+      - /mnt/archive/23/topics/Topics-2023-08-T-MilanKundera:/webarchive/collections/topics/archive/23/Topics-2023-08-T-MilanKundera"
       # - type: bind
       #   source: "/index"
       #   target: "/webarchive/collections/"
