@@ -1,11 +1,61 @@
 # Rozpracované
 
-## Stav 6. Květen 2024,
+## Květen 2024
 
 - Automatická Indexace: `/mnt/archive/23/topics/Topics-2023-07-T-APVVM`
 - Index: `/mnt/prase`
+- Struktura
 
-## Stav Duben 2024
+```Dockerfile
+pywb:
+    image: webrecorder/pywb:2.7.4
+    volumes:
+      # INDEX
+      - "/mnt/prase:/webarchive/collections/topics/indexes/"
+      # ARCHIV
+      - /mnt/archive/23/topics/Topics-2023-07-T-APVVM:/webarchive/collections/topics/archive/23/Topics-2023-07-T-APVVM
+      - /mnt/archive/23/topics/Topics-2023-08-T-MilanKundera:/webarchive/collections/topics/archive/23/Topics-2023-08-T-MilanKundera
+      # KONFIGURACE
+      - "{{ pywb_dir }}/config.yaml:/webarchive/config.yaml"
+```
+
+### Stroktura pro Pywb
+
+> Otázka jestli do téhle struktury zapadají i historická data. Je potřeba projít strukturu archivu od roku 2005.
+
+Varianta 1
+
+```
+Collections
+
+- Topic 1 // Tématická sklizeň
+    - Archive
+        - 23
+            - Sklizeň 1
+        - 24
+            - Sklizeň 2
+            - Sklizeň 3
+    - Indexes // Automaticky generované
+
+- Topic 2 // Tématická sklizeň
+```
+
+Varianta 2
+
+```
+Collections
+
+- Topic 1 // Tématická sklizeň
+    - Archive
+        - Sklizeň 1
+        - Sklizeň 2
+        - Sklizeň 3
+    - Indexes // Automaticky generované
+
+- Topic 2 // Tématická sklizeň
+```
+
+## Duben 2024
 
 [Github commit](https://github.com/WebarchivCZ/pywb/commit/bdf54dc3b2ec8d3dc85e5e0d67a8dbcbb12f302e)
 
