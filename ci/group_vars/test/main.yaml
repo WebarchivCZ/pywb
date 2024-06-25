@@ -1,0 +1,8 @@
+# Environment - is it production, test or local development?
+env: test
+
+# Directory where pywb is installed
+pywb_dir: /home/ansible/pywb
+# Who owns directories & files
+owner: ansible
+group: ansible

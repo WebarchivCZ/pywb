@@ -6,11 +6,6 @@ set -o nounset # exit when using undeclared variables
 set -o pipefail # catch non-zero exit code in pipes
 # set -o xtrace # uncomment for bug hunting
 
-{% if env == "local" %}
-docker docker-compose -f {{ pywb_dir }}/docker-compose-{{ env }}.yaml -p pywb-{{ env }} stop
-{% else %}
-sudo docker-compose -f {{ pywb_dir }}/docker-compose-test.yaml -p pywb-test stop
-{% endif %}
+cd ci && ansible-playbook -i local deploy.yaml
 
-
-
+#docker run --rm -it -p 8000:8000 -v ${PWD}:/docs squidfunk/mkdocs-material

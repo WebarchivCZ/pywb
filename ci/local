@@ -1,8 +1,8 @@
 ---
-test:
+local:
   hosts:
-    wa-pywb-prod:
-      ansible_host: 10.3.0.21
+    localhost:
+      ansible_connection: local
   vars:
     # seeder_docker_tag: develop
     # seeder_db_host: seeder_db

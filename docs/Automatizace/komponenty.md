@@ -8,7 +8,7 @@ Automatizační nástroj je uchován na Githubu v repozitáři [pywb](https://gi
 
 ### Base images
 
-Služba pywb je provozovaná z docker image vytvořeném tvůrcem pywb [Ilya Kreymer](https://github.com/ikreymer). Všechny dostupné tagy obrazu jsou zveřejněné na [Dockerhub](https://hub.docker.com/r/webrecorder/pywb/tags). V okamžiku psaního tohoto dokumentu byla nejnovější verze pywb 2.7.4.
+Služba [pywb](https://pywb.readthedocs.io/en/latest/) je provozovaná z docker image vytvořeném tvůrcem pywb [Ilya Kreymer](https://github.com/ikreymer). Všechny dostupné tagy obrazu jsou zveřejněné na [Dockerhub](https://hub.docker.com/r/webrecorder/pywb/tags). V okamžiku psaního tohoto dokumentu byla nejnovější verze pywb 2.7.4.
 
 ## Dokumentace
 

@@ -17,14 +17,25 @@ Typy sklizní jsou popsány na stránkách [českého webového archivu](https:/
 
 V současné době se archiv obvykle skládá z následujících strategií sklizní. Výběrové sklizně jsou v drtivém případě realizované v rámci sklizní ve složce `serials`, Celoplošné sklizně v rámci složky `totals`. Ostatní sklizně plní primárně Tématické sklině. Koncový uživatel webového archivu neví, v rámci jaké sklízecí strategie a v rámci kterého typu sklizně byla data získána. To je technický údaj, který není dostupný pomocí OpenWayback. V rámci Pywb je určitá šance, tuto informaci zpřístupnit.
 
+#### Výběrové sklizně
+
 - `serials` - Výběrové sklizně.
-- `totals` - Celoplošné sklizně
+- `tests` - testovací, technické sklizně na zvážení zda je možné webovou stránku archivovat v dostačující kvalitě.
+
+#### Tématické sklizně
+
 - `topics`- Tématické sklizně
 - `continuous` - průběžné sklizně NewsDigest - Tématické sklizně
 - `continuous-cov19` - průběžné sklizně k tématu Covid 2019 - Tématické sklizně
 - `continuous-ukrainewar` - průběžné sklizně k tématu válka na Ukrajině - Tématické sklizně
+
+#### Celoplošné sklizně
+
+- `totals` - Celoplošné sklizně
+
+#### Individuální sklizně
+
 - `manuals` - ruční sklizně - Tématické sklizně & z malé části výběrové sklizně
-- `tests` - testovací, technické sklizně na zvážení zda je možné webovou stránku archivovat v dostačující kvalitě.
 
 ### Host
 
@@ -37,3 +48,9 @@ V současné době se archiv obvykle skládá z následujících strategií skli
 - `/webarchive/collections/` - adresář se všemi namapovaný kolekcemi z `/mnt/archive`
 
 ## Webrecorder pywb toolkit
+
+### Automatická indexace
+
+[Oficiální Pywb dokumentace: Dynamic Collections and Automatic Indexing](https://pywb.readthedocs.io/en/latest/manual/usage.html#dynamic-collections-and-automatic-indexing)
+
+[Github Pull Request pro Automatickou Indexace](https://github.com/webrecorder/pywb/commit/733642551da989fdfc227e16d7ab75871060efb7)

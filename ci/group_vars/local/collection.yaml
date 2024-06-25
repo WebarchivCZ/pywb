@@ -1,0 +1,44 @@
+volume_to_collection_mapping:
+  # INDEX
+  # - "/mnt/prase:/webarchive/collections/topics/indexes/"
+  # Mount fast storage as index to each collections
+  # - "/index/:/webarchive/collections/topics/indexes/"
+  # - "/index/:/webarchive/collections/totals/indexes/"
+  # - "/index/:/webarchive/collections/serials/indexes/"
+  # TOPICS
+  # 
+  - "{{ pywb_collection }}/Topics-2023-07-T-APVVM:/webarchive/collections/topics/archive/23/Topics-2023-07-T-APVVM"
+  # - /Users/kreibicr/Downloads/Topics-2023-07-T-APVVM/logs/cdx/:/webarchive/collections/topics/indexes/
+  # Mount topics as archive sources
+  #- /mnt/archive/23/topics/Topics-2023-07-T-APVVM:/webarchive/collections/topics/archive/23/Topics-2023-07-T-APVVM
+  # - /mnt/archive/23/topics/Topics-2023-08-T-MilanKundera:/webarchive/collections/topics/archive/23/Topics-2023-08-T-MilanKundera
+  # - type: bind
+  #   source: "/index"
+  #   target: "/webarchive/collections/"
+  # Overwrite pywb configuration inside docker container
+  - "{{ pywb_dir }}/config.yaml:/webarchive/config.yaml"
+  # Add single archive to image
+  # - "/mnt/archive/23/manuals/crawls/collections/:/webarchive/collections/"
+  # Archives
+  # - "/mnt/archive/23/continuous-cov19:/webarchive/collections/2023-continuous-cov19/archive/"
+  # - "/mnt/archive/23/continuous-ukrainewar:/webarchive/collections/2023-continuous-ukrainewar/archive/"
+  # - "/mnt/archive/23/continuous:/webarchive/collections/2023-continuous/archive/"
+  # - "/mnt/archive/23/manuals:/webarchive/collections/2023-manuals/archive/"
+  # - "/mnt/archive/23/serials:/webarchive/collections/2023-serials/archive/"
+  # - "/mnt/archive/23/tests:/webarchive/collections/2023-tests/archive/"
+  # - "/mnt/archive/23/totals:/webarchive/collections/2023-totals/archive/"
+  # Indexes
+  # - "/mnt/archive/23/index/2023-continuous-cov19.cdx:/webarchive/collections/2023-continuous-cov19/indexes/2023-continuous-cov19.cdx"
+  # - "/mnt/archive/23/index/2023-continuous-ukrainewar.cdx:/webarchive/collections/2023-continuous-ukrainewar/indexes/2023-continuous-ukrainewar.cdx"
+  # - "/mnt/archive/23/index/2023-continuous.cdx:/webarchive/collections/2023-continuous/indexes/2023-continuous.cdx"
+  # - "/mnt/archive/23/index/2023-manuals.cdx:/webarchive/collections/2023-manuals/indexes/2023-manuals.cdx"
+  # - "/mnt/archive/23/index/2023-serials.cdx:/webarchive/collections/2023-serials/indexes/2023-serials.cdx"
+  # - "/mnt/archive/23/index/2023-tests.cdx:/webarchive/collections/2023-tests/indexes/2023-tests.cdx"
+  # - "/mnt/archive/23/index/2023-topics.cdx:/webarchive/collections/2023-topics/indexes/2023-topics.cdx"
+  # - "/mnt/archive/23/index/2023-totals.cdx:/webarchive/collections/2023-totals/indexes/2023-totals.cdx"
+  # - "/mnt/archive/23/index/:/webarchive/collections/2023/indexes/"
+  # - "/mnt/archive/23/:/webarchive/collections/2023/archive/"
+  # - "/mnt/archive/23/index/2023-tests.cdx:/webarchive/collections/2023-tests/indexes/2023-tests.cdx"
+  # - "/mnt/archive/23/tests/:/webarchive/collections/2023-tests/archive/"
+
+  # - ./uwsgi_subdir.ini:/uwsgi/uwsgi.ini

@@ -19,28 +19,9 @@ pywb:
       - "{{ pywb_dir }}/config.yaml:/webarchive/config.yaml"
 ```
 
-### Stroktura pro Pywb
+### Struktura pro Pywb
 
 > Otázka jestli do téhle struktury zapadají i historická data. Je potřeba projít strukturu archivu od roku 2005.
-
-Varianta 1
-
-```
-Collections
-
-- Topic 1 // Tématická sklizeň
-    - Archive
-        - 23
-            - Sklizeň 1
-        - 24
-            - Sklizeň 2
-            - Sklizeň 3
-    - Indexes // Automaticky generované
-
-- Topic 2 // Tématická sklizeň
-```
-
-Varianta 2
 
 ```
 Collections
@@ -50,9 +31,36 @@ Collections
         - Sklizeň 1
         - Sklizeň 2
         - Sklizeň 3
-    - Indexes // Automaticky generované
+    - Indexes
+        - Sklizeň 1
+        - Sklizeň 2
+        - Sklizeň 3
 
 - Topic 2 // Tématická sklizeň
+```
+
+Index fyzický struktura
+
+```
+- /mnt/index
+    - /topics
+        - /Topics-2023-07-T-APVVM
+        - /Topics-2023-08-T-MilanKundera
+    - /totals
+        - /2023
+        - /2024
+
+```
+
+Mapování v Docker-compose
+
+"fyzická casta na serveru":"cesta z pohledu pywb"
+
+```Dockerfile
+      - /mnt/archive/22/serials:/webarchive/collections/serials/archive/
+      - /mnt/archive/22/totals:/webarchive/collections/totals/archive/
+      - /mnt/archive/23/serials:/webarchive/collections/serials/archive/
+      - /mnt/archive/23/totals:/webarchive/collections/totals/archive/
 ```
 
 ## Duben 2024

@@ -3,10 +3,10 @@
   hosts: all
   tasks:
     - name: "Prepare pywb operation directory"
-      become: true
+      become: "{{ sudo | default(true) }}"
       file:
-        owner: ansible
-        group: ansible
+        owner: "{{ owner | default(omit) }}"
+        group: "{{ group | default(omit) }}"
         dest: "{{ pywb_dir }}"
         state: directory
 
@@ -33,7 +33,7 @@
         src: "{{ item.src }}"
         dest: "{{ pywb_dir }}/{{ item.dest }}"
       loop:
-        - src: docker-compose.yaml
+        - src: docker-compose.yaml.j2
           dest: docker-compose-{{ env }}.yaml
         - src: config.yaml
           dest: config.yaml
@@ -54,4 +54,5 @@
           dest: "{{ pywb_dir }}/exec-{{ env }}.sh"
         - src: docker.sh
           dest: "{{ pywb_dir }}/docker-{{ env }}.sh"
-
+        - src: wb-manager.sh
+          dest: "{{ pywb_dir }}/wb-manager-{{ env }}.sh"

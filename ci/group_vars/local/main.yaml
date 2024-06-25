@@ -1,0 +1,9 @@
+# Environment - is it production, test or local development?
+env: local
+
+# we are using only pathes we have access as user.
+sudo: false
+
+# Directory where pywb is installed
+pywb_dir: "{{ lookup('env', 'PWD') }}/../local-pywb"
+pywb_collection: "{{ lookup('env', 'PWD') }}/../local-collection"

@@ -1,0 +1,7 @@
+# I need venv for some reaon..
+ci/venv
+
+# Run pywb from local directory
+local-pywb/
+# Provide a local collection to pywb
+local-collection/
