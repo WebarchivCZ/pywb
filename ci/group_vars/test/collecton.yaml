@@ -4,9 +4,9 @@ volume_to_collection_mapping:
   ### Index
   - /mnt/index/topics/2024-06-VolbyDoEU/indexes/:/webarchive/collections/2024-06-VolbyDoEU/indexes/
   ### Archives
-  - /mnt/archive/24/topics/Topics-2024-06-VolbyDoEU2:/webarchive/collections/2024-06-VolbyDoEU/Topics-2024-06-VolbyDoEU2
-  - /mnt/archive/24/topics/Topics-2024-06-VolbyDoEU3:/webarchive/collections/2024-06-VolbyDoEU/Topics-2024-06-VolbyDoEU3
-  - /mnt/archive/24/topics/Topics-2024-06-VolbyDoEU-MistrovstviSvetaVHokeji:/webarchive/collections/2024-06-VolbyDoEU/Topics-2024-06-VolbyDoEU-MistrovstviSvetaVHokeji
+  - /mnt/archive/24/topics/Topics-2024-06-VolbyDoEU2:/webarchive/collections/2024-06-VolbyDoEU/archive/Topics-2024-06-VolbyDoEU2
+  - /mnt/archive/24/topics/Topics-2024-06-VolbyDoEU3:/webarchive/collections/2024-06-VolbyDoEU/archive/Topics-2024-06-VolbyDoEU3
+  - /mnt/archive/24/topics/Topics-2024-06-VolbyDoEU-MistrovstviSvetaVHokeji:/webarchive/collections/2024-06-VolbyDoEU/archive/Topics-2024-06-VolbyDoEU-MistrovstviSvetaVHokeji
   ## Topics - Just generic name - TODO remove later: /mnt/index/topics/indexes/
   - "/mnt/index/topics/indexes/:/webarchive/collections/topics/indexes/"
   - /mnt/archive/23/topics/Topics-2023-07-T-APVVM:/webarchive/collections/topics/archive/23/Topics-2023-07-T-APVVM
