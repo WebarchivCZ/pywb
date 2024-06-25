@@ -8,7 +8,7 @@ set -o pipefail # catch non-zero exit code in pipes
 
 
 {% if env == "local" %}
-docker-compose -f {{ pywb_dir }}/docker-compose-{{ env }}.yaml -p pywb-{{ env }} wb-manager "$@"
+docker exec -it pywb-local-pywb-1 wb-manager "$@"
 {% else %}
-sudo docker-compose -f {{ pywb_dir }}/docker-compose-{{ env }}.yaml -p pywb-{{ env }} wb-manager "$@"
+sudo docker exec -it pywb-local-pywb-1 wb-manager "$@"
 {% endif %}
