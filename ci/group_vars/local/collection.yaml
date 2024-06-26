@@ -7,6 +7,7 @@ volume_to_collection_mapping:
   # - "/index/:/webarchive/collections/serials/indexes/"
   # TOPICS
   # 
+  - "{{ pywb_collection }}/index:/webarchive/collections/topics/indexes"
   - "{{ pywb_collection }}/Topics-2023-07-T-APVVM:/webarchive/collections/topics/archive/23/Topics-2023-07-T-APVVM"
   # - /Users/kreibicr/Downloads/Topics-2023-07-T-APVVM/logs/cdx/:/webarchive/collections/topics/indexes/
   # Mount topics as archive sources
