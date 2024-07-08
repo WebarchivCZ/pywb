@@ -16,8 +16,8 @@ services:
   pywb:
     image: webrecorder/pywb:2.7.4
     volumes: 
-{% for mapping in volume_to_collection_mapping %}
-      - "{{ mapping }}"
+{% for path in collection %}
+      - "{{ path }}"
 {% endfor %}
     labels:
       - "traefik.http.routers.pywb.rule=Host(`whoami.docker.localhost`) || Host(`10.3.0.21`) || Host(`localhost`)"
