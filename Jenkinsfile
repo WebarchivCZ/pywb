@@ -54,7 +54,7 @@ pipeline {
             set -o pipefail # catch non-zero exit code in pipes
             # set -o xtrace # uncomment for bug hunting
 
-            ssh -o "StrictHostKeyChecking=no" -i ${SSH_CREDS} ${SSH_CREDS_USR}@10.3.0.21 sudo /home/ansible/pywb/run-test.sh
+            # ssh -o "StrictHostKeyChecking=no" -i ${SSH_CREDS} ${SSH_CREDS_USR}@10.3.0.21 sudo /home/ansible/pywb/run-test.sh
             # Následující vymřelo na nenalezení dockercopose
             # ssh -o "StrictHostKeyChecking=no" -i ${SSH_CREDS} ${SSH_CREDS_USR}@10.3.0.21 sudo /opt/pywb/run-test.sh
           '''
