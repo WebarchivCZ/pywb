@@ -19,6 +19,7 @@
       ansible.builtin.user:
         name: "{{ owner }}"
         comment: Web archive replay system
+        shell: /bin/bash
         create_home: yes
 
     - name: "Prepare pywb operation directory"
