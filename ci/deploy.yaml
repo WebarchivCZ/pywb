@@ -88,7 +88,7 @@
         - src: venv.sh
           dest: "{{ pywb_dir }}/venv.sh"
         - src: config.yaml
-          dest: /mnt/index/collections/config.yaml
+          dest: "{{ pywb_dir }}/config.yaml"
 
     # - name: "Prepare configuration for static web."
     #   copy:
