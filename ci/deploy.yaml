@@ -77,6 +77,7 @@
         state: reloaded
 
     - name: "Deployment scripts"
+      become: "{{ sudo | default(true) }}"
       template:
         src: "{{ item.src }}"
         dest: "{{ item.dest }}"
