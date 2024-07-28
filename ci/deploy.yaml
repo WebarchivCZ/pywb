@@ -9,6 +9,7 @@
         state: present
 
     - name: Install virtualenv via pip
+      become: "{{ sudo | default(true) }}"
       pip:
         name: virtualenv
         executable: pip3
@@ -28,7 +29,7 @@
         dest: "{{ pywb_dir }}"
         state: directory
 
-    - name: Install python
+    - name: Install pywb
       become: "{{ sudo | default(true) }}"
       become_user: "{{ owner | default(omit) }}"
       ansible.builtin.pip:
