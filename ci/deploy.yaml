@@ -4,6 +4,7 @@
   tasks:
     - name: User running pywb
       ansible.builtin.user:
+        become: "{{ sudo | default(true) }}"
         name: "{{ owner }}"
         comment: Web archive replay system
         create_home: yes
@@ -18,6 +19,7 @@
 
     - name: Install python
       ansible.builtin.pip:
+        become: "{{ owner | default(omit) }}"
         name: pywb
         virtualenv: "{{ pywb_dir }}/venv"
 
