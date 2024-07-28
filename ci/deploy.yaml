@@ -1,11 +1,11 @@
 ---
-- name: "Prepare configuration template"
+- name: PyWb Deployment
   hosts: all
   tasks:
     - name: Ensure ACL installed to resolve permission issues
       become: "{{ sudo | default(true) }}"
       ansible.builtin.apt:
-        name: acl
+        name: acl,nginx
         state: present
 
     - name: Install virtualenv via pip
