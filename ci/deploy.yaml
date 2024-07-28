@@ -76,6 +76,15 @@
         name: nginx
         state: reloaded
 
+    - name: "Deployment scripts"
+      template:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        mode: u+x
+      loop:
+        - src: venv.sh
+          dest: "{{ pywb_dir }}/venv.sh"
+
     # - name: "Prepare configuration for static web."
     #   copy:
     #     dest: /home/ansible/seeder/static-nginx.conf
