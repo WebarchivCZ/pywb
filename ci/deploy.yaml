@@ -2,6 +2,12 @@
 - name: "Prepare configuration template"
   hosts: all
   tasks:
+    - name: Ensure ACL installed to resolve permission issues
+      become: "{{ sudo | default(true) }}"
+      ansible.builtin.package:
+        name: acl
+        state: present
+
     - name: User running pywb
       become: "{{ sudo | default(true) }}"
       ansible.builtin.user:
