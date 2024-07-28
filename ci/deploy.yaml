@@ -3,8 +3,8 @@
   hosts: all
   tasks:
     - name: User running pywb
+      become: "{{ sudo | default(true) }}"
       ansible.builtin.user:
-        become: "{{ sudo | default(true) }}"
         name: "{{ owner }}"
         comment: Web archive replay system
         create_home: yes
@@ -18,8 +18,9 @@
         state: directory
 
     - name: Install python
+      become: "{{ sudo | default(true) }}"
+      become_user: "{{ owner | default(omit) }}"
       ansible.builtin.pip:
-        become: "{{ owner | default(omit) }}"
         name: pywb
         virtualenv: "{{ pywb_dir }}/venv"
 
