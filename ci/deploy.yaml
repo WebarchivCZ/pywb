@@ -2,6 +2,12 @@
 - name: "Prepare configuration template"
   hosts: all
   tasks:
+    - name: User running pywb
+      ansible.builtin.user:
+        name: "{{ owner }}"
+        comment: Web archive replay system
+        create_home: yes
+
     - name: "Prepare pywb operation directory"
       become: "{{ sudo | default(true) }}"
       file:
@@ -9,6 +15,11 @@
         group: "{{ group | default(omit) }}"
         dest: "{{ pywb_dir }}"
         state: directory
+
+    - name: Install python
+      ansible.builtin.pip:
+        name: pywb
+        virtualenv: "{{ pywb_dir }}/venv"
 
     # - name: "Prepare configuration for static web."
     #   copy:
@@ -28,31 +39,31 @@
     #         listen 0.0.0.0:80;
     #       }
 
-    - name: "Deploy Docker Compose"
-      template:
-        src: "{{ item.src }}"
-        dest: "{{ pywb_dir }}/{{ item.dest }}"
-      loop:
-        - src: docker-compose.yaml.j2
-          dest: docker-compose-{{ env }}.yaml
-        - src: config.yaml
-          dest: config.yaml
+    # - name: "Deploy Docker Compose"
+    #   template:
+    #     src: "{{ item.src }}"
+    #     dest: "{{ pywb_dir }}/{{ item.dest }}"
+    #   loop:
+    #     - src: docker-compose.yaml.j2
+    #       dest: docker-compose-{{ env }}.yaml
+    #     - src: config.yaml
+    #       dest: config.yaml
 
-    - name: "Deployment scripts"
-      template:
-        src: "{{ item.src }}"
-        dest: "{{ item.dest }}"
-        mode: u+x
-      loop:
-        - src: run.sh
-          dest: "{{ pywb_dir }}/run-{{ env }}.sh"
-        - src: stop.sh
-          dest: "{{ pywb_dir }}/stop-{{ env }}.sh"
-        - src: logs.sh
-          dest: "{{ pywb_dir }}/logs-{{ env }}.sh"
-        - src: exec.sh
-          dest: "{{ pywb_dir }}/exec-{{ env }}.sh"
-        - src: docker.sh
-          dest: "{{ pywb_dir }}/docker-{{ env }}.sh"
-        - src: wb-manager.sh
-          dest: "{{ pywb_dir }}/wb-manager-{{ env }}.sh"
+    # - name: "Deployment scripts"
+    #   template:
+    #     src: "{{ item.src }}"
+    #     dest: "{{ item.dest }}"
+    #     mode: u+x
+    #   loop:
+    #     - src: run.sh
+    #       dest: "{{ pywb_dir }}/run-{{ env }}.sh"
+    #     - src: stop.sh
+    #       dest: "{{ pywb_dir }}/stop-{{ env }}.sh"
+    #     - src: logs.sh
+    #       dest: "{{ pywb_dir }}/logs-{{ env }}.sh"
+    #     - src: exec.sh
+    #       dest: "{{ pywb_dir }}/exec-{{ env }}.sh"
+    #     - src: docker.sh
+    #       dest: "{{ pywb_dir }}/docker-{{ env }}.sh"
+    #     - src: wb-manager.sh
+    #       dest: "{{ pywb_dir }}/wb-manager-{{ env }}.sh"
