@@ -34,21 +34,21 @@
       become: "{{ sudo | default(true) }}"
       become_user: "{{ owner | default(omit) }}"
       ansible.builtin.pip:
-        name: pywb
+        name: pywb, uwsgi
         virtualenv: "{{ pywb_dir }}/venv"
 
-    - name: deploy nginx configuration for pywb-test
-      become: "{{ sudo | default(true) }}"
-      copy:
-        dest: /etc/nginx/sites-available/pywb-test
-        content: |
-          server {
-            listen 80;
-            server_name pywb-test;
-            location / {
-              proxy_pass http://127.0.0.1:8080;
-            }
-          }
+    # - name: deploy nginx configuration for pywb-test
+    #   become: "{{ sudo | default(true) }}"
+    #   copy:
+    #     dest: /etc/nginx/sites-available/pywb-test
+    #     content: |
+    #       server {
+    #         listen 80;
+    #         server_name pywb-test;
+    #         location / {
+    #           proxy_pass http://127.0.0.1:8080;
+    #         }
+    #       }
 
     - name: deploy nginx configuration for pywb-test
       become: "{{ sudo | default(true) }}"
@@ -57,9 +57,16 @@
         content: |
           server {
             listen 80;
-            server_name pywb-test;
+
+            location /static {
+                alias {{ pywb_dir }}/venv/lib/python3.10/site-packages/pywb/static/;
+            }
+
             location / {
-              proxy_pass http://127.0.0.1:8080;
+                uwsgi_pass localhost:8081;
+
+                include uwsgi_params;
+                uwsgi_param UWSGI_SCHEME $scheme;
             }
           }
 
