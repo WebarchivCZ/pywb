@@ -105,7 +105,7 @@
           #wsgi = pywb.apps.wayback
 
           # config to run pywb from a prefix
-          mount = /wayback=/pywb/pywb/apps/wayback.py
+          mount = /wayback={{ pywb_dir }}/venv/lib/python3.10/site-packages/pywb/apps/wayback.py
           manage-script-name = true
 
     - name: set nginx configuration to pywb-test
