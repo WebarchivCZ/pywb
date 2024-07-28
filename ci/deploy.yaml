@@ -76,7 +76,7 @@
         name: nginx
         state: reloaded
 
-    - name: "Deployment scripts"
+    - name: "Deployment scripts & configurations"
       become: "{{ sudo | default(true) }}"
       template:
         owner: "{{ owner | default(omit) }}"
@@ -87,6 +87,8 @@
       loop:
         - src: venv.sh
           dest: "{{ pywb_dir }}/venv.sh"
+        - src: config.yaml
+          dest: /mnt/index/collections/config.yaml
 
     # - name: "Prepare configuration for static web."
     #   copy:
