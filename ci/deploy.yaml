@@ -79,6 +79,8 @@
     - name: "Deployment scripts"
       become: "{{ sudo | default(true) }}"
       template:
+        owner: "{{ owner | default(omit) }}"
+        group: "{{ group | default(omit) }}"
         src: "{{ item.src }}"
         dest: "{{ item.dest }}"
         mode: u+x
