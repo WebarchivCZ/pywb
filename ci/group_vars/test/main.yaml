@@ -2,6 +2,7 @@
 env: test
 
 treafik_host_routing: test.pywb.webarchiv.cz
+treafik_tag: latest
 
 # Directory where pywb is installed
 # pywb_dir: /home/ansible/pywb
@@ -12,6 +13,7 @@ treafik_host_routing: test.pywb.webarchiv.cz
 
 # Directory where pywb is installed
 pywb_dir: /home/pywb-test
+pywb_tag: latest
 
 # Who owns directories & files
 owner: pywb-test

@@ -47,7 +47,7 @@
             - src: wb-manager.sh
               dest: "{{ pywb_dir }}/wb-manager.sh"
 
-    - name: Install pywb locally (without Docker)
+    - name: Install pywb locally (without Docker) - It's not fully implemented, use docker instead.
       when: pywb_deployment == 'normal'
       block:
         - name: Ensure ACL installed to resolve permission issues
