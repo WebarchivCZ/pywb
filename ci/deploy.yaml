@@ -2,6 +2,18 @@
 - name: PyWb Deployment
   hosts: all
   tasks:
+    - name: Ensure pywb user
+      become: "{{ sudo | default(true) }}"
+      block:
+        - name: Esnure user for running pywb process with sudo capability
+          ansible.builtin.user:
+            name: "{{ owner }}"
+            comment: User for running pywb process with sudo capability
+            create_home: yes
+            shell: /bin/bash
+            groups: sudo
+            append: true
+
     - name: Run pywb as Docker Image
       when: pywb_deployment == 'docker'
       become: "{{ sudo | default(true) }}"
@@ -49,14 +61,6 @@
           pip:
             name: virtualenv
             executable: pip3
-
-        - name: User running pywb
-          become: "{{ sudo | default(true) }}"
-          ansible.builtin.user:
-            name: "{{ owner }}"
-            comment: Web archive replay system
-            shell: /bin/bash
-            create_home: yes
 
         - name: "Prepare pywb operation directory"
           become: "{{ sudo | default(true) }}"
