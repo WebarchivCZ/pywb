@@ -22,7 +22,7 @@ services:
       - "{{ path }}"
 {% endfor %}
     labels:
-      - "traefik.http.routers.pywb.rule=Host(Host(`localhost`) || Host(`{{ treafik_host_routing }}`) "
+      - "traefik.http.routers.pywb.rule=Host(`localhost`) || Host(`{{ treafik_host_routing }}`)"
   whoami:
     # A container that exposes an API to show its IP address  
     image: traefik/whoami
