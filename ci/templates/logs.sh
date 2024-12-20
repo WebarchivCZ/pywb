@@ -9,6 +9,6 @@ set -o pipefail # catch non-zero exit code in pipes
 {% if env == "local" %}
 docker-compose -f {{ pywb_dir }}/docker-compose-{{ env }}.yaml -p pywb-{{ env }} logs pywb -f
 {% else %}
-sudo docker-compose -f {{ pywb_dir }}/docker-compose-{{ env }}.yaml -p pywb-{{ env }} logs pywb -f
+sudo docker-compose -f {{ pywb_dir }}/docker-compose.yaml -p pywb-{{ env }} logs pywb -f
 {% endif %}
 

@@ -10,5 +10,5 @@ set -o pipefail # catch non-zero exit code in pipes
 {% if env == "local" %}
 docker exec -it pywb-local-pywb-1 wb-manager "$@"
 {% else %}
-sudo docker exec -it pywb-local-pywb-1 wb-manager "$@"
+sudo docker exec -it pywb-{{ env }}-pywb-1 wb-manager "$@"
 {% endif %}

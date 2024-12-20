@@ -12,9 +12,9 @@ docker-compose -f {{ pywb_dir }}/docker-compose-{{ env }}.yaml -p pywb-{{ env }}
 docker-compose -f {{ pywb_dir }}/docker-compose-{{ env }}.yaml -p pywb-{{ env }} pull
 docker-compose -f {{ pywb_dir }}/docker-compose-{{ env }}.yaml -p pywb-{{ env }} up -d --remove-orphans
 {% else %}
-sudo docker-compose -f {{ pywb_dir }}/docker-compose-{{ env }}.yaml -p pywb-{{ env }} down
-sudo docker-compose -f {{ pywb_dir }}/docker-compose-{{ env }}.yaml -p pywb-{{ env }} pull
-sudo docker-compose -f {{ pywb_dir }}/docker-compose-{{ env }}.yaml -p pywb-{{ env }} up -d --remove-orphans
+sudo docker-compose -f {{ pywb_dir }}/docker-compose.yaml -p pywb-{{ env }} down
+sudo docker-compose -f {{ pywb_dir }}/docker-compose.yaml -p pywb-{{ env }} pull
+sudo docker-compose -f {{ pywb_dir }}/docker-compose.yaml -p pywb-{{ env }} up -d --remove-orphans
 {% endif %}
 
 
