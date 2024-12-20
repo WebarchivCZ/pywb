@@ -4,6 +4,8 @@
   tasks:
     - name: Run pywb as Docker Image
       when: pywb_deployment == 'docker'
+      become: "{{ sudo | default(true) }}"
+      become_user: "{{ owner | default(omit) }}"
       block:
         - name: "Deploy Docker Compose"
           template:

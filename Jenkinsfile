@@ -34,11 +34,6 @@ pipeline {
             set -o pipefail # catch non-zero exit code in pipes
             # set -o xtrace # uncomment for bug hunting
 
-            whoami
-            env
-            ssh -o "StrictHostKeyChecking=no" -i ${SSH_CREDS} ${SSH_CREDS_USR}@10.3.0.21 whoami
-            ssh -o "StrictHostKeyChecking=no" -i ${SSH_CREDS} ${SSH_CREDS_USR}@10.3.0.21 hostname
-
             cd ci
             ansible-playbook -i test --private-key ${SSH_CREDS} -u ${SSH_CREDS_USR} deploy.yaml
           '''
