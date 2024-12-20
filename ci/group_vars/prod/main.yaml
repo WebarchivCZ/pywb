@@ -1,7 +1,7 @@
 # Environment - is it production, test or local development?
 env: test
 
-treafik_host_routing: test.pywb.webarchiv.cz
+treafik_host_routing: pywb.webarchiv.cz
 
 # Directory where pywb is installed
 # pywb_dir: /home/ansible/pywb
@@ -11,8 +11,8 @@ treafik_host_routing: test.pywb.webarchiv.cz
 # group: ansible
 
 # Directory where pywb is installed
-pywb_dir: /home/pywb-test
+pywb_dir: /home/pywb-prod
 
 # Who owns directories & files
-owner: pywb-test
-group: pywb-test
+owner: pywb-prod
+group: pywb-prod

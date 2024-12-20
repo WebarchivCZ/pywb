@@ -1,0 +1,17 @@
+---
+test:
+  hosts:
+    wa-pywb-prod:
+      ansible_host: 10.3.0.21
+  vars:
+    # seeder_docker_tag: develop
+    # seeder_db_host: seeder_db
+    # seeder_db_name: seeder
+    # seeder_db_user: seeder
+    # seeder_db_pass: "{{ seeder_db_pass_vault }}"
+    # seeder_django_allowed_hosts: app.webarchiv.cz
+    # seeder_django_debug: "False"
+    # treafik_seeder_rule: "Host(`app.webarchiv.cz`)"
+    # treafik_seeder_static_rule: "Host(`app.webarchiv.cz`) && (PathPrefix(`/static`) || PathPrefix(`/media`))"
+    # treafik_seeder_vyvoj_rule: "Host(`app.webarchiv.cz`) && PathPrefix(`/vyvoj`)"
+    # treafik_api_rule: "Host(`wa-dev-docker00`) || Host(`10.3.0.110`)"

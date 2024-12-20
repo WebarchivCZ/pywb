@@ -1,0 +1,2 @@
+# Choose Docker or Normal pywb deployment. Normal is not finished.
+pywb_deployment: docker
