@@ -33,6 +33,11 @@ pipeline {
             set -o nounset # exit when using undeclared variables
             set -o pipefail # catch non-zero exit code in pipes
             # set -o xtrace # uncomment for bug hunting
+            
+            echo ${SSH_CREDS_USR}
+            echo whoami
+            echo env
+            ping 10.3.0.21
 
             cd ci
             ansible-playbook -i test --private-key ${SSH_CREDS} -u ${SSH_CREDS_USR} deploy.yaml
