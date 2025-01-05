@@ -29,9 +29,9 @@ fi
 export COLLECTION_NAME=$1
 export COLLECTIONS_ROOT_PATH=/mnt/index/collections
 export COLLECTION_PATH=${COLLECTIONS_ROOT_PATH}/${COLLECTION_NAME}
-export COLLECTION_ARCHIVE_PATH=${COLLECTIONS_PATH}/archive
-export COLLECTION_INDEXES_PATH=${COLLECTIONS_PATH}/indexes
-export COLLECTION_INDEX=${COLLECTIONS_PATH}/indexes/prase.cdxj
+export COLLECTION_ARCHIVE_PATH=${COLLECTION_PATH}/archive
+export COLLECTION_INDEXES_PATH=${COLLECTION_PATH}/indexes
+export COLLECTION_INDEX=${COLLECTION_PATH}/indexes/prase.cdxj
 export INDEX_BACKUP_PATH=/mnt/index/cdxj-archive
 export INDEXER=cdxj-indexer
 
@@ -39,12 +39,13 @@ create_index () {
     ARCHIVE_PATH=$1
     ARCHIVE_NAME=$(basename ${ARCHIVE_PATH})
     INDEX_PATH=${COLLECTION_PATH}/${ARCHIVE_NAME}.cdxj
+    echo "Processing ${ARCHIVE_PATH} into ${INDEX_PATH}"
     ${INDEXER} -s ${ARCHIVE_PATH} -o ${INDEX_PATH}
 
 }
-find ${COLLECTION_ARCHIVE_PATH} -type f \( -name "*.warc.gz" -o -name "*.arc.gz" \) -exec bash -c 'create_index "$0"' {} \;
+find ${COLLECTION_ARCHIVE_PATH} -type l \( -name "*.warc.gz" -o -name "*.arc.gz" \) -exec bash -c 'create_index "$0"' {} \;
 
-echo "Archive indexes created in ${COLLECTION_PATH}"
+echo "Archive indexes created in ${COLLECTION_PATH}/"
 echo "Merging & sorting all indexes to ${COLLECTION_INDEX}"
 LANG=C.UTF-8 sort ${COLLECTION_PATH}*.cdxj > ${COLLECTION_INDEX}
 echo "${COLLECTION_NAME} index created in ${COLLECTION_INDEX}"
