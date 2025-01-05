@@ -40,7 +40,7 @@ create_index () {
     ARCHIVE_PATH=$1
     ARCHIVE_NAME=$(basename ${ARCHIVE_PATH})
     INDEX_PATH=${COLLECTION_PATH}/${ARCHIVE_NAME}.cdxj
-    if [ -f ${INDEX_BACKUP_PATH}/${ARCHIVE_NAME} ]; then
+    if [ -f ${INDEX_BACKUP_PATH}/${ARCHIVE_NAME}.cdxj ]; then
                 echo "Index for ${ARCHIVE_NAME} already exists in cdxj-archive. Making local copy instead of indexing." \
                         >> ${COLLECTION_PATH}/$(date -u --iso-8601).log
                 cp ${INDEX_BACKUP_PATH}/${ARCHIVE_NAME}.cdxj ${INDEX_PATH}
