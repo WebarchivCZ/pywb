@@ -1,5 +1,5 @@
 ---
-test:
+prod:
   hosts:
     wa-pywb-prod:
       ansible_host: 10.3.0.21
