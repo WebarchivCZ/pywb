@@ -30,7 +30,7 @@
         - name: "Deploy Traefik configuration"
           copy:
             src: "{{ item.src }}"
-            dest: /home/traefik/{{ item.dest }}"
+            dest: "/home/traefik/{{ item.dest }}"
           loop:
             - src: traefik/docker-compose.yaml
               dest: docker-compose.yaml
