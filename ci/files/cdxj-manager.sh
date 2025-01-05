@@ -40,6 +40,7 @@ create_index () {
     ARCHIVE_PATH=$1
     ARCHIVE_NAME=$(basename ${ARCHIVE_PATH})
     INDEX_PATH=${COLLECTION_PATH}/${ARCHIVE_NAME}.cdxj
+    echo "[$(date -u --iso-8601=seconds)] Processing ${COLLECTION_NAME}"
     if [ -f ${INDEX_BACKUP_PATH}/${ARCHIVE_NAME}.cdxj ]; then
                 echo "[$(date -u --iso-8601=seconds)] Index for ${ARCHIVE_NAME} already exists in cdxj-archive. Making local copy instead of indexing." \
                         >> ${COLLECTION_PATH}/$(date -u --iso-8601).log
@@ -56,7 +57,7 @@ create_index () {
 
 export -f create_index
 
-find ${COLLECTION_ARCHIVE_PATH} -type l \( -name "*.warc.gz" -o -name "*.arc.gz" \) -exec bash -c 'create_index "$0"' {} \;
+/usr/bin/time -v find ${COLLECTION_ARCHIVE_PATH} -type l \( -name "*.warc.gz" -o -name "*.arc.gz" \) -exec bash -c 'create_index "$0"' {} \;
 
 echo "Archive indexes created in ${COLLECTION_PATH}/"
 echo "[$(date -u --iso-8601=seconds)] Merging & sorting all indexes to ${COLLECTION_INDEX}"
