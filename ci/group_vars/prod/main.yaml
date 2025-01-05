@@ -1,5 +1,5 @@
 # Environment - is it production, test or local development?
-env: test
+env: prod
 
 # Traefik version
 treafik_tag: v3.2.3
