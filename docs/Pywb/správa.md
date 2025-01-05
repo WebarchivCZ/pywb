@@ -1,30 +1,36 @@
-# Nástroje pro práci s archivem
+# Správa kolekcí
 
-Většina následujících nástrojů vytváří dlouhoběžící procesy. Proto je dobré používat tmux. Ten umožňuje se odpojit od terminálu aniž by byli zabit dlouhodobý proces. A je možné se k terminálu s běžícím procesem opět připojit.
+## Uživatelé pywb-test a pywb-prod
+
+S archivem se interaguje skrze uživatele`pywb-test` a `pywb-prod`. Přihlášení probíhá skrve osobního uživatele a pak se použije `sudo su - pywb-test` nebo `sudo su - pywb-prod` k získání terminálu pywb. Existují jen produkční kolekce, v nich vytvořené indexi a z kolekcí směřují symbolické odkazy do úložiště. Samotný pywb běží v oddělených kontejnerech, takže je možné konfigurace testovat bez vlivu na produkční prostředí. Nicméně nástroje `./collection-manager` a `./cdxj-manager` pracují jen se sdílenou reprezentací data. Pokud by bylo k dispozici dost místa, je možné vytvořit `/mnt/index/collections-test` a připravit paralelní kolekce pro testování. Jelikož nástroj uchovává již vytvořené indexi v adresáři `/mnt/index/cdxj-archive/`, je možné přepoužít již hotové indexy v alternativních kolekcích.
+
+## Tmux
+
+Většina následujících nástrojů vytváří dlouhoběžící procesy. Proto je dobré používat [tmux](https://github.com/tmux/tmux). Ten umožňuje se odpojit od terminálu aniž by byli zabit dlouhodobý proces. A je možné se k terminálu s běžícím procesem opět kdykoliv připojit.
 
 Vytvoření nového okna v `tmux`u
 
 ```shell
-tmux
+pywb-test@war2:~$ tmux
 ```
 
 Odchod z Tmux terminálu bez ukončení běžících procesů.
 
 ```shell
-^b d
+pywb-test@war2:~$ ^b d
 /// tedy zmáčknou CTRL+b a poté d.
 ```
 
 Ukočení Tmux terminálu (všechny procesy v terminálu budou ukončeny).
 
 ```shell
-exit
+pywb-test@war2:~$ exit
 ```
 
 Přiojit se k Tmux terminálu
 
 ```shell
-tmux attach
+pywb-test@war2:~$ tmux attach
 ```
 
 Práce s více tmux terminály
@@ -214,6 +220,33 @@ pywb-test@war2:~$ curl http://10.3.0.21:443/wayback/timemap/link/http://undergro
 <http://10.3.0.21:443/wayback/http://underground.cz/814>; rel="timegate",
 <http://underground.cz/814>; rel="original",
 <http://10.3.0.21:443/wayback/20020714180422mp_/http://underground.cz/814>; rel="memento"; datetime="Sun, 14 Jul 2002 18:04:22 GMT"; collection="05-cz"
+```
+
+### Získání metadata o URL pomocí cdx?
+
+[Pywb UI](http://10.3.0.21:443/all/20220628154342/https://www.facebook.com/legal/terms)
+
+```bash
+pywb-test@war2 curl -s '10.3.0.21:443/wayback/cdx?url=www.facebook.com/legal/terms&output=json'
+```
+
+vrací
+
+```json
+{
+  "urlkey": "com,facebook)/legal/terms",
+  "timestamp": "20221209191852",
+  "url": "https://www.facebook.com/legal/terms",
+  "mime": "text/html",
+  "status": "200",
+  "digest": "GRUWGB5ZAMAPKEAC2DOOD2AEY7M6P2EZ",
+  "length": "290673",
+  "offset": "496164353",
+  "filename": "rec-20221209182111914788-65f062a0d7a3.warc.gz",
+  "source": "1222_prezident23/indexes/index.cdxj",
+  "source-coll": "1222_prezident23",
+  "access": "allow"
+}
 ```
 
 ### Indexační nástroj ./wb-manager-reindex.sh
