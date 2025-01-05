@@ -25,7 +25,7 @@
     - name: Deploy Traefik as Reverse Proxy
       when: pywb_deployment == 'docker'
       become: "{{ sudo | default(true) }}"
-      become_user: treafik
+      become_user: traefik
       block:
         - name: "Deploy Traefik configuration"
           copy:
