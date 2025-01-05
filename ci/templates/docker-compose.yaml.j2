@@ -18,9 +18,27 @@ services:
   pywb:
     image: webrecorder/pywb:{{ pywb_tag }}
     volumes: 
-{% for path in collection %}
-      - "{{ path }}"
-{% endfor %}
+      # PyWB configuration
+      - "{{ pywb_dir }}/config.yaml:/webarchive/config.yaml"
+      # PyWb Collections with indexes, achive links and configurations
+      - type: bind
+        source: /mnt/index/collections
+        target: /webarchive/collections
+      # Standard Archive Storage
+      - type: bind
+        source: /mnt/archive
+        target: /mnt/archive
+        read_only: true
+      # Fragmented Archive Storage
+      - type: bind
+        source: /mnt/datas
+        target: /mnt/datas
+        read_only: true
+      # Fragmented Archive Storage
+      - type: bind
+        source: /mnt/handsbery
+        target: mnt/handsbery
+        read_only: true
     labels:
       - "traefik.http.routers.pywb.rule=Host(`localhost`) || Host(`10.3.0.21`) || Host(`{{ treafik_host_routing }}`)"
   {# whoami:
