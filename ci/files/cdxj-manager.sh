@@ -49,9 +49,9 @@ create_index () {
                         >> ${COLLECTION_PATH}/$(date -u --iso-8601).log
                 ${INDEXER} -s ${ARCHIVE_PATH} -o ${INDEX_PATH} \
                         2> ${INDEX_BACKUP_LOGS_PATH}/${ARCHIVE_NAME}.cdxj.stderr
+                # Delete empty stderr logs
+                [ -s ${INDEX_BACKUP_LOGS_PATH}/${ARCHIVE_NAME}.cdxj.stderr ] || rm ${INDEX_BACKUP_LOGS_PATH}/${ARCHIVE_NAME}.cdxj.stderr
     fi
-    # Delete empty stderr logs
-    [ -s ${INDEX_BACKUP_LOGS_PATH}/${ARCHIVE_NAME}.cdxj.stderr ] || rm ${INDEX_BACKUP_LOGS_PATH}/${ARCHIVE_NAME}.cdxj.stderr
 }
 
 export -f create_index
