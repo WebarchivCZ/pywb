@@ -1,5 +1,43 @@
 # Nástroje pro práci s archivem
 
+Většina následujících nástrojů vytváří dlouhoběžící procesy. Proto je dobré používat tmux. Ten umožňuje se odpojit od terminálu aniž by byli zabit dlouhodobý proces. A je možné se k terminálu s běžícím procesem opět připojit.
+
+Vytvoření nového okna v `tmux`u
+
+```shell
+tmux
+```
+
+Odchod z Tmux terminálu bez ukončení běžících procesů.
+
+```shell
+^b d
+/// tedy zmáčknou CTRL+b a poté d.
+```
+
+Ukočení Tmux terminálu (všechny procesy v terminálu budou ukončeny).
+
+```shell
+exit
+```
+
+Přiojit se k Tmux terminálu
+
+```shell
+tmux attach
+```
+
+Práce s více tmux terminály
+
+```shell
+pywb-test@war2:~$ tmux ls
+10: 1 windows (created Sat Jan  4 00:45:03 2025) (attached)
+11: 1 windows (created Sun Jan  5 20:04:26 2025)
+6: 1 windows (created Fri Jan  3 17:09:01 2025) (attached)
+7: 1 windows (created Fri Jan  3 17:09:20 2025) (attached)
+pywb-test@war2:~$ tmux a -t 11
+```
+
 ## Spráce Kolekcí - ./collection-manager.sh
 
 Slouží ke správě kolekcí. Každá kolekce umožní zobrazit pouze archivní data, které do ní patří. Pokud by byli všechny data jen v jedné kolekci, nebylo by například možné oddělit celoplošné sklizně od tématických sklizní při kontrole kvality sklizně.
@@ -132,31 +170,53 @@ pywb-test@war2:~$
 ```
 
 ## Indexační nástroj ./cdxj-manager.sh
-Je wrapper nástroje [cdxj-indexer](https://github.com/webrecorder/cdxj-indexer/tree/main). Slouží k vytvoření indexu pro danou kolekci. Index je nutný pro zobrazení archivních dat. Indexování je časově náročný proces. Indexování je možné spustit pro jednu kolekci.
+Je wrapper nástroje [cdxj-indexer](https://github.com/webrecorder/cdxj-indexer/tree/main). Slouží k vytvoření indexu pro danou kolekci. Index je nutný pro zobrazení archivních dat. Indexování je časově náročný proces.
 
-### Použití Indexačního nástroje
+Nástroj nejdříve zkontroluje zda-li index pro daný archiv již neexistue v adresáři `/mnt/index/cdxj-archive/`. Pokud existuje, zkopíruje již existující index do kořene adresáře kolekce `/mnt/index/collections/{{collection}/`. Pokud index neexistuje, nástroj vytvoří index do kořene adresáře kolekce `/mnt/index/collections/{{collection}/`. Zda-li byl index vytvořen nebo zkopírován je zaznamenán do logu `/mnt/index/collections/{{collection}/${date -u --iso-8601}.log`.
 
-#### Indexace jedné kolekce
+V logu je možné zjistit živá data z probíhající indexace.
+
+```shell
+pywb-test@war2:/mnt/index/collections$ tail -f 05-cz/2025-01-05.log
+[2025-01-05T20:29:11+00:00] Processing /mnt/index/collections/05-cz/archive/NEDLIB--20051122211225-00000.arc.gz into /mnt/index/collections/05-cz/NEDLIB--20051122211225-00000.arc.gz.cdxj
+[2025-01-05T20:29:13+00:00] Processing /mnt/index/collections/05-cz/archive/NEDLIB--20051130094855-00000.arc.gz into /mnt/index/collections/05-cz/NEDLIB--20051130094855-00000.arc.gz.cdxj
+[2025-01-05T20:29:15+00:00] Processing /mnt/index/collections/05-cz/archive/NEDLIB--20051209053122-00000.arc.gz into /mnt/index/collections/05-cz/NEDLIB--20051209053122-00000.arc.gz.cdxj
+```
+
+Jakmile jsou všechny indexy archivy v kolekci vytvořené. Nástroj setřídí všechny `*.arc.gz` a `*.warc.gz` do souboru `/mnt/index/collections/{{collection}/indexes/index.cdxj`. A poté přesune indexy do `/mnt/index/cdxj-archive/`.
+
+Všechny chybové zprávy vzniklé při indexaci jsou uchovány `/mnt/index/cdxj-archive/logs/{ARCHIVE_NAME}.cdxj.stderr`.
+
+### Indexace jedné kolekce
 
 ```shell
 pywb-test@war2:~$ ./cdxj-manager.sh 05-cz
 ```
 
-#### Indexace více kolekcí
+### Indexace více kolekcí
+
+Indexace všech kolekcí z roku 05.
 
 ```shell
 pywb-test@war2:~$ for collection in $(ls /mnt/index/collections/ |grep ^05-*); do ./cdxj-manager.sh $collection; done
-Processing /mnt/index/collections/05-cz/archive/NEDLIB--20051213175930-00000.arc.gz into /mnt/index/collections/05-cz/NEDLIB--20051213175930-00000.arc.gz.cdxj
-Processing /mnt/index/collections/05-cz/archive/NEDLIB--20051123102110-00000.arc.gz into /mnt/index/collections/05-cz/NEDLIB--20051123102110-00000.arc.gz.cdxj
-Processing /mnt/index/collections/05-cz/archive/NEDLIB--20051212232724-00001.arc.gz into /mnt/index/collections/05-cz/NEDLIB--20051212232724-00001.arc.gz.cdxj
-Processing /mnt/index/collections/05-cz/archive/NEDLIB--20051208151516-00000.arc.gz into /mnt/index/collections/05-cz/NEDLIB--20051208151516-00000.arc.gz.cdxj
-Processing /mnt/index/collections/05-cz/archive/NEDLIB--20051130174551-00000.arc.gz into /mnt/index/collections/05-cz/NEDLIB--20051130174551-00000.arc.gz.cdxj
-Processing /mnt/index/collections/05-cz/archive/NEDLIB--20051202182006-00000.arc.gz into /mnt/index/collections/05-cz/NEDLIB--20051202182006-00000.arc.gz.cdxj
-Processing /mnt/index/collections/05-cz/archive/NEDLIB--20051201232246-00000.arc.gz into /mnt/index/collections/05-cz/NEDLIB--20051201232246-00000.arc.gz.cdxj
+[2025-01-05T20:14:38+00:00] Processing 05-cz
 ```
 
-````shell
-## Indexační nástroj ./wb-manager-reindex.sh
+## Nástroje pywb
+
+### Jak zjistit z jaké kolekce URL pochází?
+
+MementoAPI poskytuje informace o URL. Výstup obsahuje informace o URL, kolekci, časové známce a kolekci.
+
+```shell
+pywb-test@war2:~$ curl http://10.3.0.21:443/wayback/timemap/link/http://underground.cz/814
+<http://10.3.0.21:443/wayback/timemap/link/http://underground.cz/814>; rel="self"; type="application/link-format"; from="Sun, 14 Jul 2002 18:04:22 GMT",
+<http://10.3.0.21:443/wayback/http://underground.cz/814>; rel="timegate",
+<http://underground.cz/814>; rel="original",
+<http://10.3.0.21:443/wayback/20020714180422mp_/http://underground.cz/814>; rel="memento"; datetime="Sun, 14 Jul 2002 18:04:22 GMT"; collection="05-cz"
+```
+
+### Indexační nástroj ./wb-manager-reindex.sh
 
 > [!WARNING]
 > Tento nástroj je omezený počtem paměti serveru. Proto se nehodí na větší sklizně. S každým novým archivem v kolekci, stoupa spotřeba paměti. Nástroj ./cdxj-manager.sh by měl být spolehlivější..
@@ -167,13 +227,11 @@ Wrapper spustí příklaz wb-manager reindex uvnitř kontejneru pywb. Příkaz v
 
 #### Indexace jedné kolekce
 
-### Použití Indexačního nástroje
-
 ```shell
 pywb-test@war2:~$ ./wb-manager-reindex.sh 05-cz
 indexing collection: 05-cz
 
-````
+```
 
 #### Indexace více kolekcí
 
@@ -243,18 +301,4 @@ pywb-test@war2:~$ for collection in /mnt/index/collections/{05,06,07,08,09,10,11
 12-NKP-2012
 12-Serials
 12-testCrawls
-```
-
-## Nástroje pywb
-
-### Jak zjistit z jaké kolekce URL pochází?
-
-MementoAPI poskytuje informace o URL. Výstup obsahuje informace o URL, kolekci, časové známce a kolekci.
-
-```shell
-pywb-test@war2:~$ curl http://10.3.0.21:443/wayback/timemap/link/http://underground.cz/814
-<http://10.3.0.21:443/wayback/timemap/link/http://underground.cz/814>; rel="self"; type="application/link-format"; from="Sun, 14 Jul 2002 18:04:22 GMT",
-<http://10.3.0.21:443/wayback/http://underground.cz/814>; rel="timegate",
-<http://underground.cz/814>; rel="original",
-<http://10.3.0.21:443/wayback/20020714180422mp_/http://underground.cz/814>; rel="memento"; datetime="Sun, 14 Jul 2002 18:04:22 GMT"; collection="05-cz"
 ```
