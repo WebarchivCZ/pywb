@@ -31,7 +31,7 @@ export COLLECTIONS_ROOT_PATH=/mnt/index/collections
 export COLLECTION_PATH=${COLLECTIONS_ROOT_PATH}/${COLLECTION_NAME}
 export COLLECTION_ARCHIVE_PATH=${COLLECTION_PATH}/archive
 export COLLECTION_INDEXES_PATH=${COLLECTION_PATH}/indexes
-export COLLECTION_INDEX=${COLLECTION_PATH}/indexes/prase.cdxj
+export COLLECTION_INDEX=${COLLECTION_PATH}/indexes/index.cdxj
 export INDEX_BACKUP_PATH=/mnt/index/cdxj-archive
 export INDEXER=cdxj-indexer
 
@@ -43,13 +43,16 @@ create_index () {
     ${INDEXER} -s ${ARCHIVE_PATH} -o ${INDEX_PATH}
 
 }
+
+export -f create_index
+
 find ${COLLECTION_ARCHIVE_PATH} -type l \( -name "*.warc.gz" -o -name "*.arc.gz" \) -exec bash -c 'create_index "$0"' {} \;
 
 echo "Archive indexes created in ${COLLECTION_PATH}/"
 echo "Merging & sorting all indexes to ${COLLECTION_INDEX}"
-LANG=C.UTF-8 sort ${COLLECTION_PATH}*.cdxj > ${COLLECTION_INDEX}
-echo "${COLLECTION_NAME} index created in ${COLLECTION_INDEX}"
+LANG=C.UTF-8 sort ${COLLECTION_PATH}/*.cdxj > ${COLLECTION_INDEX}
+echo "Collection ${COLLECTION_NAME} index created in ${COLLECTION_INDEX}"
 echo "Moving archive indexes to ${INDEX_BACKUP_PATH}"
-mv ${COLLECTION_PATH}*.cdxj ${INDEX_BACKUP_PATH}/
+mv ${COLLECTION_PATH}/*.cdxj ${INDEX_BACKUP_PATH}/
 echo "Indexes moved to ${INDEX_BACKUP_PATH}. Nothing left to do. My work is done. Happy Oink! <=~"
 echo "Check out https://pywb.webarchiv.cz/${COLLECTION_NAME}/"
