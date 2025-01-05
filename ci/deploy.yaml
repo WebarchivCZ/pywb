@@ -46,6 +46,16 @@
               dest: "{{ pywb_dir }}/docker.sh"
             - src: wb-manager.sh
               dest: "{{ pywb_dir }}/wb-manager.sh"
+        - name: "Collection tools"
+          copy:
+            src: "{{ item.src }}"
+            dest: "{{ item.dest }}"
+            mode: u+x
+          loop:
+            - src: collection-manager.sh
+              dest: "{{ pywb_dir }}/collection-manager.sh"
+            - src: cdxj-manager.sh
+              dest: "{{ pywb_dir }}/cdxj-manager.sh"
     ##
     ## Following code is discontinued, use docker instead. Can be removed if we stick to docker.
     ##
