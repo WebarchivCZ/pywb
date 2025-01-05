@@ -68,7 +68,7 @@ pipeline {
                 SSH_CREDS = credentials('ansible')
         }
         steps {
-          input "Přísáhám před krutým a přísným bohem, že https://app.webarchiv.cz je v perfektním stavu a stvrzuji, že může jít do produkce na https://webarchiv.cz."
+          input "Přísáhám před krutým a přísným bohem, že https://test.pywb.webarchiv.cz/wayback je v perfektním stavu a stvrzuji, že může jít do produkce na https://pywb.webarchiv.cz/wayback."
           sh '''#!/usr/bin/env bash
             # Make Bash Great Again
             set -o errexit # exit when a command fails.
@@ -76,10 +76,8 @@ pipeline {
             set -o pipefail # catch non-zero exit code in pipes
             # set -o xtrace # uncomment for bug hunting
 
-            # docker push webarchiv/seeder:latest
-            # cd ci
-            # ansible-playbook -i prod --private-key ${SSH_CREDS} -u ${SSH_CREDS_USR} prepare-configuration.yml
-            # ssh -o "StrictHostKeyChecking=no" -i ${SSH_CREDS} ${SSH_CREDS_USR}@10.3.0.50 sudo /opt/pywb/run-prod.sh
+            cd ci
+            ansible-playbook -i prod --private-key ${SSH_CREDS} -u ${SSH_CREDS_USR} deploy.yaml
           '''
         }
       }

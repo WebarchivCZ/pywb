@@ -1,17 +1,12 @@
 # Environment - is it production, test or local development?
 env: test
 
-treafik_host_routing: test.pywb.webarchiv.cz
+# Traefik version, be aware production is using v3.2.3.
 treafik_tag: latest
 
-# Directory where pywb is installed
-# pywb_dir: /home/ansible/pywb
+pywb_traefik_configuration: "traefik.http.routers.pywb.rule=Host(`localhost`) || Host(`10.3.0.21`) || Host(`test.pywb.webarchiv.cz`)"
 
-# Who owns directories & files
-# owner: ansible
-# group: ansible
-
-# Directory where pywb is installed
+# Directory where pywb is installed, be aware production is using hardcoded pywb tag.
 pywb_dir: /home/pywb-test
 pywb_tag: latest
 
