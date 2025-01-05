@@ -1,0 +1,232 @@
+# Nástroje pro práci s archivem
+
+## Spráce Kolekcí - ./collection-manager.sh
+
+Slouží ke správě kolekcí. Každá kolekce umožní zobrazit pouze archivní data, které do ní patří. Pokud by byli všechny data jen v jedné kolekci, nebylo by například možné oddělit celoplošné sklizně od tématických sklizní při kontrole kvality sklizně.
+
+V praxi nástroj hledá soubory `*.warc.gz|*.arc.gz` ve vybraném úložišti. A pomocí sady pravidel vytvoří kolekci pro dané archivy. V kolekci vytvoří složky `archive` a `indexes`. A do složky `archive` vytvoří symbolické odkazy vedoucí do úložiště. Tímto způsobem pywb okamžitě vidí nové kolekce. A jakmile dojde k vytvoření indexu dané kolekce, je možné procházet jak samotnou kolekci, tak použít souhrnou kolekci /wayback/, která zobrazí všechny kolekce.
+
+Úložiště je po řadě incidentů fragmentováno i mimo obvyklou strukturu `/mnt/archiv/{05..25}`. Collection manager s touto situací umí pracovat. Pří zpracování roku úložiště má předkonfigurované cesty, kde se archivy nacházejí. P
+
+```bash
+case $param in
+		13)
+			ARCHIVE_YEAR=13
+			SEARCH_ROOT_DIR=/mnt/datas/178/archive13
+			;;
+		14)
+			ARCHIVE_YEAR=14
+			SEARCH_ROOT_DIR="/mnt/datas/178/archive14 /mnt/datas/178/archive14 /mnt/datas/178/archive14Serials /mnt/datas/178/Archive14NDK-part /mnt/datas/180"
+			;;
+```
+
+```shell
+pywb-test@war2:~$ ./collection-manaager.sh 14
+Processing Archive: 14. Mounted at /mnt/datas/178/archive14 /mnt/datas/178/archive14 /mnt/datas/178/archive14Serials /mnt/datas/178/Archive14NDK-part /mnt/datas/180. Time for coffer break.
+```
+
+Kolekce mají prefix ve formátu `YY`, ten odkazuje na rok úložitě. Prefix snižuje šanci na kolizi názvů kolekcí, ale možnost kolizce není zcela vyloučena. Je ale možné vytvořit kolekci bez prefixu, pokud se jedná například o tématickou sklizeň napříč roky. Jde ale spojit Prezidenské volby z různých let do jedné kolekce.
+
+```shell
+pywb-test@war2:/mnt/index/collections$ ls -1 *Serials* |grep Serials
+05-Serials:
+06-Serials:
+07-Serials:
+08-Serials:
+09-Serials:
+10-Serials:
+```
+
+Jedna kolekce může obsahovat více sklizní. Například všechny sklizně obsahující název Serials nebo serials, jsou uchovány v jedné kolekci Serials pro daný rok. Např. `/mnt/index/collections/05-Serials/archive/` obsahuje archivy ze sklizní `2005-12-24-serials`, `2004-05-00-serials` a `2005-06-12-serials` uložených v `/mnt/archive/05/`.
+
+```shell
+IAH-20051224150339-00009-harvester.nkp.cz.arc.gz -> /mnt/archive/05/serials/2005-12-24-serials/IAH-20051224150339-00009-harvester.nkp.cz.arc.gz
+NEDLIB--20051117164000-00000.arc.gz -> /mnt/archive/05/serials/2004-05-00-serials/NEDLIB--20051117164000-00000.arc.gz
+neuroacta-20050617160122-00001.arc.gz -> /mnt/archive/05/serials/2005-06-12-serials/neuroacta-20050617160122-00001.arc.gz
+```
+
+Všechny kolekce existují v adresáři `/mnt/index/collections`. Pywb umožňuje jen plochou strukturu kolekcí. Proto kolekce používají prefix roku, kde byl obsah archivován.
+Příkad:
+
+```shell
+pywb-test@war2:/mnt/index/collections$ ls
+05-cz         05-militaria-20041212  06-estonia   06-Serials     06-zive_servery    07-Serials
+05-cz2004     05-Serials             06-harvest0  06-slovakia    07-cz2007          08-cz2008
+05-cz2005     05-vysocina            06-idnes     06-slovenia    07-MICR
+05-dalimil    06-cz2006              06-Ikaros    06-univerzity  07-novaBudovaNK
+05-info_muni  06-czech               06-povodne   06-volby2006   07-olympiadaPraha
+
+pywb-test@war2:/mnt/index/collections$ tree -d
+.
+├── 05-cz
+│   ├── archive
+│   └── indexes
+├── 05-cz2004
+│   ├── archive
+│   └── indexes
+├── 05-cz2005
+│   ├── archive
+│   └── indexes
+├── 05-dalimil
+│   ├── archive
+│   └── indexes
+├── 05-info_muni
+│   ├── archive
+│   └── indexes
+├── 05-militaria-20041212
+│   ├── archive
+│   └── indexes
+├── 05-Serials
+│   ├── archive
+│   └── indexes
+├── 05-vysocina
+│   ├── archive
+│   └── indexes
+...
+```
+
+### Použití Collection Manager
+
+Uživatelé `pywb-test` a `pywb-prod` mají přístup k nástroji `collection-manager.sh` ze své domovské složky.
+
+#### Vytvoření kolekce z úložiště
+
+```shell
+./collection-manaager.sh 24
+```
+
+#### Vytvoření kolekce z více úložišť
+
+```shell
+for archive in 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24; do ./collection-manaager.sh ${archive}; done
+```
+
+Výstup po vytváření kolekce.
+
+```shell
+pywb-test@war2:~$ for archive in 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24; do ./collection-manaager.sh ${archive}; done
+Processing Year: 05
+Processing Year: 06
+Processing Year: 07
+Processing Year: 08
+Processing Year: 09
+Processing Year: 10
+Processing Year: 11
+find: ‘/mnt/archive/11/.mmbackupCfg/prepFiles’: Permission denied
+find: ‘/mnt/archive/11/.mmbackupCfg/expiredFiles’: Permission denied
+find: ‘/mnt/archive/11/.mmbackupCfg/updatedFiles’: Permission denied
+Processing Year: 12
+Processing Year: 13
+Processing Year: 14
+Processing Year: 15
+Processing Year: 16
+Processing Year: 17
+Processing Year: 18
+Processing Year: 19
+Processing Year: 20
+Processing Year: 21
+Processing Year: 22
+Processing Year: 23
+Processing Year: 24
+pywb-test@war2:~$
+```
+
+## Indexační nástroj ./wb-manager-reindex.sh
+
+Je wrapper nástroje pywb manager. Slouží k vytvoření indexu pro danou kolekci. Index je nutný pro zobrazení archivních dat. Indexování je časově náročný proces. Indexování je možné spustit pro jednu kolekci.
+
+Wrapper spustí příklaz wb-manager reindex uvnitř kontejneru pywb. Příkaz vyžaduje název kolekce. Název kolekce je název složky v adresáři `/mnt/index/collections/`. Wrapper na konci indeakce vypíše dobu trvání indexace a všechny chyby uloží do složky `/home/{pywb-test|pywb-prod}/logs/`, dle uživatele, který nástroj spustil.
+
+### Použití Indexačního nástroje
+
+#### Indexace jedné kolekce
+
+```shell
+pywb-test@war2:~$ ./wb-manager-reindex.sh 05-cz
+indexing collection: 05-cz
+
+```
+
+#### Indexace více kolekcí
+
+```shell
+pywb-test@war2:~$ for collection in /mnt/index/collections/{05,06,07,08,09,10,11,12}*; do ./wb-manager-reindex.sh $(basename ${collection}); done
+indexing collection: 05-cz
+```
+
+Výstup seznamu nalazených kolekcí.
+
+```shell
+pywb-test@war2:~$ for collection in /mnt/index/collections/{05,06,07,08,09,10,11,12}*; do echo $(basename ${collection}); done
+05-cz
+05-cz2004
+05-cz2005
+05-dalimil
+05-info_muni
+05-militaria-20041212
+05-Serials
+05-vysocina
+06-cz2006
+06-czech
+06-estonia
+06-harvest0
+06-idnes
+06-Ikaros
+06-povodne
+06-Serials
+06-slovakia
+06-slovenia
+06-univerzity
+06-volby2006
+06-zive_servery
+07-cz2007
+07-MICR
+07-novaBudovaNK
+07-olympiadaPraha
+07-Serials
+08-cz2008
+08-novaBudovaNK
+08-novaBudovaSTK
+08-Serials
+08-volba-prezident-2008
+08-vyroci68
+09-cz2009
+09-evropskeVolby2009
+09-komunismusIdnes
+09-liberec
+09-novaBudovaNK
+09-novaBudovaSTK
+09-predsednictviEU
+09-selectedSites
+09-selective
+09-Serials
+09-testing
+10-cz2010
+10-Serials
+11-ArchiveIt
+11-cz2011
+11-Havel-2011
+11-Serials
+11-test_files
+12-ArchiveIt
+12-Bloguje-2012
+12-Extras
+12-Havel-2011
+12-NKP-2012
+12-Serials
+12-testCrawls
+```
+
+## Nástroje pywb
+
+### Jak zjistit z jaké kolekce URL pochází?
+
+MementoAPI poskytuje informace o URL. Výstup obsahuje informace o URL, kolekci, časové známce a kolekci.
+
+```shell
+pywb-test@war2:~$ curl http://10.3.0.21:443/wayback/timemap/link/http://underground.cz/814
+<http://10.3.0.21:443/wayback/timemap/link/http://underground.cz/814>; rel="self"; type="application/link-format"; from="Sun, 14 Jul 2002 18:04:22 GMT",
+<http://10.3.0.21:443/wayback/http://underground.cz/814>; rel="timegate",
+<http://underground.cz/814>; rel="original",
+<http://10.3.0.21:443/wayback/20020714180422mp_/http://underground.cz/814>; rel="memento"; datetime="Sun, 14 Jul 2002 18:04:22 GMT"; collection="05-cz"
+```
