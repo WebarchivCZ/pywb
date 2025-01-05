@@ -1,9 +1,6 @@
 # Environment - is it production, test or local development?
 env: prod
 
-# Traefik version
-treafik_tag: v3.2.3
-
 pywb_traefik_configuration: "traefik.http.routers.pywb.rule=Host(`pywb.webarchiv.cz`)"
 
 # Directory where pywb is installed
