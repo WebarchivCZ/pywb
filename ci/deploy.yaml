@@ -31,13 +31,16 @@
           copy:
             src: "{{ item.src }}"
             dest: "/home/traefik/{{ item.dest }}"
+            mode: "{{ mode | default(true) }}"
           loop:
             - src: traefik/docker-compose.yaml
               dest: docker-compose.yaml
             - src: traefik/run.sh
               dest: run.sh
+              mode: u+x
             - src: traefik/stop.sh
               dest: stop.sh
+              mode: u+x
 
     - name: Run pywb as Docker Image
       when: pywb_deployment == 'docker'
