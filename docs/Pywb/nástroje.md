@@ -131,21 +131,49 @@ Processing Year: 24
 pywb-test@war2:~$
 ```
 
+## Indexační nástroj ./cdxj-manager.sh
+Je wrapper nástroje [cdxj-indexer](https://github.com/webrecorder/cdxj-indexer/tree/main). Slouží k vytvoření indexu pro danou kolekci. Index je nutný pro zobrazení archivních dat. Indexování je časově náročný proces. Indexování je možné spustit pro jednu kolekci.
+
+### Použití Indexačního nástroje
+
+#### Indexace jedné kolekce
+
+```shell
+pywb-test@war2:~$ ./cdxj-manager.sh 05-cz
+```
+
+#### Indexace více kolekcí
+
+```shell
+pywb-test@war2:~$ for collection in $(ls /mnt/index/collections/ |grep ^05-*); do ./cdxj-manager.sh $collection; done
+Processing /mnt/index/collections/05-cz/archive/NEDLIB--20051213175930-00000.arc.gz into /mnt/index/collections/05-cz/NEDLIB--20051213175930-00000.arc.gz.cdxj
+Processing /mnt/index/collections/05-cz/archive/NEDLIB--20051123102110-00000.arc.gz into /mnt/index/collections/05-cz/NEDLIB--20051123102110-00000.arc.gz.cdxj
+Processing /mnt/index/collections/05-cz/archive/NEDLIB--20051212232724-00001.arc.gz into /mnt/index/collections/05-cz/NEDLIB--20051212232724-00001.arc.gz.cdxj
+Processing /mnt/index/collections/05-cz/archive/NEDLIB--20051208151516-00000.arc.gz into /mnt/index/collections/05-cz/NEDLIB--20051208151516-00000.arc.gz.cdxj
+Processing /mnt/index/collections/05-cz/archive/NEDLIB--20051130174551-00000.arc.gz into /mnt/index/collections/05-cz/NEDLIB--20051130174551-00000.arc.gz.cdxj
+Processing /mnt/index/collections/05-cz/archive/NEDLIB--20051202182006-00000.arc.gz into /mnt/index/collections/05-cz/NEDLIB--20051202182006-00000.arc.gz.cdxj
+Processing /mnt/index/collections/05-cz/archive/NEDLIB--20051201232246-00000.arc.gz into /mnt/index/collections/05-cz/NEDLIB--20051201232246-00000.arc.gz.cdxj
+```
+
+````shell
 ## Indexační nástroj ./wb-manager-reindex.sh
+
+> [!WARNING]
+> Tento nástroj je omezený počtem paměti serveru. Proto se nehodí na větší sklizně. S každým novým archivem v kolekci, stoupa spotřeba paměti. Nástroj ./cdxj-manager.sh by měl být spolehlivější..
 
 Je wrapper nástroje pywb manager. Slouží k vytvoření indexu pro danou kolekci. Index je nutný pro zobrazení archivních dat. Indexování je časově náročný proces. Indexování je možné spustit pro jednu kolekci.
 
 Wrapper spustí příklaz wb-manager reindex uvnitř kontejneru pywb. Příkaz vyžaduje název kolekce. Název kolekce je název složky v adresáři `/mnt/index/collections/`. Wrapper na konci indeakce vypíše dobu trvání indexace a všechny chyby uloží do složky `/home/{pywb-test|pywb-prod}/logs/`, dle uživatele, který nástroj spustil.
 
-### Použití Indexačního nástroje
-
 #### Indexace jedné kolekce
+
+### Použití Indexačního nástroje
 
 ```shell
 pywb-test@war2:~$ ./wb-manager-reindex.sh 05-cz
 indexing collection: 05-cz
 
-```
+````
 
 #### Indexace více kolekcí
 
