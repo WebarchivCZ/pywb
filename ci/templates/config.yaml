@@ -6,14 +6,8 @@ debug: true
 # autoindex: 30
 
 collections:
-  all: $all
+  wayback: $all
   live: $live
-
-  # tests-23:
-  #   index_paths:
-  #     - ./index/
-  #   archive_paths:
-  #     - ./sample_archive/
 
 collections_root: /webarchive/collections
 
