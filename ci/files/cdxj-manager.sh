@@ -59,10 +59,11 @@ export -f create_index
 find ${COLLECTION_ARCHIVE_PATH} -type l \( -name "*.warc.gz" -o -name "*.arc.gz" \) -exec bash -c 'create_index "$0"' {} \;
 
 echo "Archive indexes created in ${COLLECTION_PATH}/"
-echo "Merging & sorting all indexes to ${COLLECTION_INDEX}"
-LANG=C.UTF-8 sort ${COLLECTION_PATH}/*.cdxj > ${COLLECTION_INDEX}
-echo "Collection ${COLLECTION_NAME} index created in ${COLLECTION_INDEX}"
+echo "$(date -u --iso-8601=seconds)] Merging & sorting all indexes to ${COLLECTION_INDEX}"
+LANG=C.UTF-8 /usr/bin/time -v sort ${COLLECTION_PATH}/*.cdxj > ${COLLECTION_INDEX}
+echo "$(date -u --iso-8601=seconds)] Collection ${COLLECTION_NAME} index created in ${COLLECTION_INDEX}"
 echo "Moving archive indexes to ${INDEX_BACKUP_PATH}"
 mv ${COLLECTION_PATH}/*.cdxj ${INDEX_BACKUP_PATH}/
 echo "Indexes moved to ${INDEX_BACKUP_PATH}. Nothing left to do. My work is done. Happy Oink! <=~"
 echo "Check out https://pywb.webarchiv.cz/${COLLECTION_NAME}/"
+echo "$(date -u --iso-8601=seconds)] Collection Ready" >> ${COLLECTION_PATH}/$(date -u --iso-8601).log
