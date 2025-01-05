@@ -33,14 +33,22 @@ export COLLECTION_ARCHIVE_PATH=${COLLECTION_PATH}/archive
 export COLLECTION_INDEXES_PATH=${COLLECTION_PATH}/indexes
 export COLLECTION_INDEX=${COLLECTION_PATH}/indexes/index.cdxj
 export INDEX_BACKUP_PATH=/mnt/index/cdxj-archive
+export INDEX_BACKUP_LOGS_PATH=/mnt/index/cdxj-archive/logs
 export INDEXER=cdxj-indexer
 
 create_index () {
     ARCHIVE_PATH=$1
     ARCHIVE_NAME=$(basename ${ARCHIVE_PATH})
     INDEX_PATH=${COLLECTION_PATH}/${ARCHIVE_NAME}.cdxj
-    echo "Processing ${ARCHIVE_PATH} into ${INDEX_PATH}"
-    ${INDEXER} -s ${ARCHIVE_PATH} -o ${INDEX_PATH}
+    if [ -f ${INDEX_BACKUP_PATH}/${ARCHIVE_NAME} ]; then
+                echo "Index for ${ARCHIVE_NAME} already exists in cdxj-archive. Making local copy instead of indexing."
+                cp ${INDEX_BACKUP_PATH}/${ARCHIVE_NAME}.cdxj ${INDEX_PATH}
+        else
+                echo "Processing ${ARCHIVE_PATH} into ${INDEX_PATH}"
+                ${INDEXER} -s ${ARCHIVE_PATH} -o ${INDEX_PATH} \
+                        > ${INDEX_BACKUP_LOGS_PATH}/${ARCHIVE_NAME}.cdxj.stdout \
+                        2> ${INDEX_BACKUP_LOGS_PATH}/${ARCHIVE_NAME}.cdxj.stderr
+    fi
 
 }
 
