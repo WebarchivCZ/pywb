@@ -2,10 +2,18 @@
 - name: PyWb Deployment
   hosts: all
   tasks:
-    - name: Ensure pywb user
+    - name: Ensure service users
       become: "{{ sudo | default(true) }}"
       block:
-        - name: Ensure user for running pywb process with sudo capability
+        - name: User for running traefik service with sudo capability
+          ansible.builtin.user:
+            name: traefik
+            comment: User for running traefik service with sudo capability
+            create_home: yes
+            shell: /bin/bash
+            groups: sudo
+            append: true
+        - name: User for running pywb process with sudo capability
           ansible.builtin.user:
             name: "{{ owner }}"
             comment: User for running pywb process with sudo capability
@@ -13,6 +21,23 @@
             shell: /bin/bash
             groups: sudo
             append: true
+
+    - name: Deploy Traefik as Reverse Proxy
+      when: pywb_deployment == 'docker'
+      become: "{{ sudo | default(true) }}"
+      become_user: treafik
+      block:
+        - name: "Deploy Traefik configuration"
+          copy:
+            src: "{{ item.src }}"
+            dest: /home/traefik/{{ item.dest }}"
+          loop:
+            - src: traefik/docker-compose.yaml
+              dest: docker-compose.yaml
+            - src: traefik/run.sh
+              dest: run.sh
+            - src: traefik/stop.sh
+              dest: stop.sh
 
     - name: Run pywb as Docker Image
       when: pywb_deployment == 'docker'
@@ -56,151 +81,3 @@
               dest: "{{ pywb_dir }}/collection-manager.sh"
             - src: cdxj-manager.sh
               dest: "{{ pywb_dir }}/cdxj-manager.sh"
-    ##
-    ## Following code is discontinued, use docker instead. Can be removed if we stick to docker.
-    ##
-    - name: Install pywb locally (without Docker) - It's not fully implemented, use docker instead.
-      when: pywb_deployment == 'normal'
-      block:
-        - name: Ensure ACL installed to resolve permission issues
-          become: "{{ sudo | default(true) }}"
-          ansible.builtin.apt:
-            name: acl,nginx
-            state: present
-
-        - name: Install virtualenv via pip
-          become: "{{ sudo | default(true) }}"
-          pip:
-            name: virtualenv
-            executable: pip3
-
-        - name: "Prepare pywb operation directory"
-          become: "{{ sudo | default(true) }}"
-          file:
-            owner: "{{ owner | default(omit) }}"
-            group: "{{ group | default(omit) }}"
-            dest: "{{ item }}"
-            state: directory
-          loop:
-            - "{{ pywb_dir }}/venv"
-            - "{{ pywb_dir }}/uwsgi"
-
-        - name: Install pywb
-          become: "{{ sudo | default(true) }}"
-          become_user: "{{ owner | default(omit) }}"
-          ansible.builtin.pip:
-            name: pywb, uwsgi
-            virtualenv: "{{ pywb_dir }}/venv"
-
-        # - name: deploy nginx configuration for pywb-test
-        #   become: "{{ sudo | default(true) }}"
-        #   copy:
-        #     dest: /etc/nginx/sites-available/pywb-test
-        #     content: |
-        #       server {
-        #         listen 80;
-        #         server_name pywb-test;
-        #         location / {
-        #           proxy_pass http://127.0.0.1:8080;
-        #         }
-        #       }
-
-        - name: deploy nginx configuration for pywb-test
-          become: "{{ sudo | default(true) }}"
-          copy:
-            dest: /etc/nginx/sites-available/pywb-test
-            content: |
-              server {
-                listen 80;
-
-                location /static {
-                    alias {{ pywb_dir }}/venv/lib/python3.10/site-packages/pywb/static/;
-                }
-
-                location / {
-                    uwsgi_pass localhost:8081;
-
-                    include uwsgi_params;
-                    uwsgi_param UWSGI_SCHEME $scheme;
-                }
-              }
-
-        - name: deploy uwsgi configuration for pywb-test
-          become: "{{ sudo | default(true) }}"
-          copy:
-            dest: "{{ pywb_dir }}/uwsgi/uwsgi.ini"
-            content: |
-              [uwsgi]
-              if-not-env = PORT
-              http-socket = :8080
-              socket = :8081
-              endif =
-
-              master = true
-              buffer-size = 65536
-              die-on-term = true
-
-              if-env = VIRTUAL_ENV
-              venv = $(VIRTUAL_ENV)
-              endif =
-
-              gevent = 100
-
-              #Not available until uwsgi 2.1
-              #monkey-patching manually in pywb.apps.wayback
-              #gevent-early-monkey-patch =
-              # for uwsgi<2.1, set env when using gevent
-              env = GEVENT_MONKEY_PATCH=1
-
-              # specify config file here
-              env = PYWB_CONFIG_FILE=config.yaml
-              #wsgi = pywb.apps.wayback
-
-              # config to run pywb from a prefix
-              mount = /wayback={{ pywb_dir }}/venv/lib/python3.10/site-packages/pywb/apps/wayback.py
-              manage-script-name = true
-
-        - name: set nginx configuration to pywb-test
-          become: "{{ sudo | default(true) }}"
-          file:
-            state: link
-            src: /etc/nginx/sites-available/pywb-test
-            dest: /etc/nginx/sites-enabled/default
-
-        - name: reload nginx
-          become: "{{ sudo | default(true) }}"
-          service:
-            name: nginx
-            state: reloaded
-
-        - name: "Deployment scripts & configurations"
-          become: "{{ sudo | default(true) }}"
-          template:
-            owner: "{{ owner | default(omit) }}"
-            group: "{{ group | default(omit) }}"
-            src: "{{ item.src }}"
-            dest: "{{ item.dest }}"
-            mode: u+x
-          loop:
-            - src: venv.sh
-              dest: "{{ pywb_dir }}/venv.sh"
-            - src: config.yaml
-              dest: "{{ pywb_dir }}/config.yaml"
-
-      # - name: "Prepare configuration for static web."
-      #   copy:
-      #     dest: /home/ansible/seeder/static-nginx.conf
-      #     content: |
-      #       server {
-      #         location /static/ {
-      #             root /seeder;
-      #         }
-      #         location /media/ {
-      #             root /seeder;
-      #         }
-
-      #         # Increase max upload size to ~50MB
-      #         client_max_body_size 53M;
-
-      #         listen 0.0.0.0:80;
-      #       }

@@ -18,6 +18,8 @@ pipeline {
 
             cd ci
             ansible-playbook -i test --private-key ${SSH_CREDS} -u ${SSH_CREDS_USR} deploy.yaml
+            ssh -o "StrictHostKeyChecking=no" -i ${SSH_CREDS} ${SSH_CREDS_USR}@10.3.0.21 sudo /home/traefik/run.sh
+            ssh -o "StrictHostKeyChecking=no" -i ${SSH_CREDS} ${SSH_CREDS_USR}@10.3.0.21 sudo /home/pywb-test/run.sh
           '''
         }
       }
@@ -39,6 +41,8 @@ pipeline {
 
             cd ci
             ansible-playbook -i prod --private-key ${SSH_CREDS} -u ${SSH_CREDS_USR} deploy.yaml
+            ssh -o "StrictHostKeyChecking=no" -i ${SSH_CREDS} ${SSH_CREDS_USR}@10.3.0.21 sudo /home/traefik/run.sh
+            ssh -o "StrictHostKeyChecking=no" -i ${SSH_CREDS} ${SSH_CREDS_USR}@10.3.0.21 sudo /home/pywb-prod/run.sh
           '''
         }
       }
