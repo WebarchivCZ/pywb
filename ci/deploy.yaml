@@ -5,7 +5,7 @@
     - name: Ensure pywb user
       become: "{{ sudo | default(true) }}"
       block:
-        - name: Esnure user for running pywb process with sudo capability
+        - name: Ensure user for running pywb process with sudo capability
           ansible.builtin.user:
             name: "{{ owner }}"
             comment: User for running pywb process with sudo capability
@@ -46,7 +46,9 @@
               dest: "{{ pywb_dir }}/docker.sh"
             - src: wb-manager.sh
               dest: "{{ pywb_dir }}/wb-manager.sh"
-
+    ##
+    ## Following code is discontinued, use docker instead. Can be removed if we stick to docker.
+    ##
     - name: Install pywb locally (without Docker) - It's not fully implemented, use docker instead.
       when: pywb_deployment == 'normal'
       block:
