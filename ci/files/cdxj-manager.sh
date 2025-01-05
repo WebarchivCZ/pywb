@@ -41,16 +41,17 @@ create_index () {
     ARCHIVE_NAME=$(basename ${ARCHIVE_PATH})
     INDEX_PATH=${COLLECTION_PATH}/${ARCHIVE_NAME}.cdxj
     if [ -f ${INDEX_BACKUP_PATH}/${ARCHIVE_NAME} ]; then
-                echo "Index for ${ARCHIVE_NAME} already exists in cdxj-archive. Making local copy instead of indexing."
+                echo "Index for ${ARCHIVE_NAME} already exists in cdxj-archive. Making local copy instead of indexing." \
                         >> ${COLLECTION_PATH}/$(date -u --iso-8601).log
                 cp ${INDEX_BACKUP_PATH}/${ARCHIVE_NAME}.cdxj ${INDEX_PATH}
         else
-                echo "Processing ${ARCHIVE_PATH} into ${INDEX_PATH}" > ${COLLECTION_PATH}/
+                echo "Processing ${ARCHIVE_PATH} into ${INDEX_PATH}" \
                         >> ${COLLECTION_PATH}/$(date -u --iso-8601).log
                 ${INDEXER} -s ${ARCHIVE_PATH} -o ${INDEX_PATH} \
                         2> ${INDEX_BACKUP_LOGS_PATH}/${ARCHIVE_NAME}.cdxj.stderr
     fi
-
+    # Delete empty stderr logs
+    [ -s ${INDEX_BACKUP_LOGS_PATH}/${ARCHIVE_NAME}.cdxj.stderr ] || rm ${INDEX_BACKUP_LOGS_PATH}/${ARCHIVE_NAME}.cdxj.stderr
 }
 
 export -f create_index
