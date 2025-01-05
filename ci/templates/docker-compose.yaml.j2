@@ -37,7 +37,7 @@ services:
       # Fragmented Archive Storage
       - type: bind
         source: /mnt/handsbery
-        target: mnt/handsbery
+        target: /mnt/handsbery
         read_only: true
     labels:
       - "traefik.http.routers.pywb.rule=Host(`localhost`) || Host(`10.3.0.21`) || Host(`{{ treafik_host_routing }}`)"
