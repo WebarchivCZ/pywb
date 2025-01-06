@@ -1,7 +1,7 @@
 # Environment - is it production, test or local development?
 env: test
 
-pywb_traefik_configuration: "traefik.http.routers.pywb.rule=Host(`localhost`) || Host(`10.3.0.21`) || Host(`test.pywb.webarchiv.cz`)"
+pywb_traefik_configuration: "traefik.http.routers.pywb-test.rule=Host(`localhost`) || Host(`10.3.0.21`) || Host(`test.pywb.webarchiv.cz`)"
 
 # Directory where pywb is installed, be aware production is using hardcoded pywb tag.
 pywb_dir: /home/pywb-test
