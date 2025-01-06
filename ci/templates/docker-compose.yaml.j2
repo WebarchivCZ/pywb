@@ -1,20 +1,6 @@
 version: '3.0'
 
 services:
-  reverse-proxy:
-    # The official v2 Traefik docker image
-    image: traefik:{{ treafik_tag }}
-    # Enables the web UI and tells Traefik to listen to docker
-    command: --api.insecure=true --providers.docker
-    ports:
-      # The HTTP port
-      - "443:80"
-      # The Web UI (enabled by --api.insecure=true)
-      - "80:8080"
-    volumes:
-        # So that Traefik can listen to the Docker events
-        - /var/run/docker.sock:/var/run/docker.sock
-
   pywb:
     image: webrecorder/pywb:{{ pywb_tag }}
     volumes: 
@@ -41,8 +27,15 @@ services:
         read_only: true
     labels:
       - {{ pywb_traefik_configuration }}
+    networks:
+      - traefik
   {# whoami:
     # A container that exposes an API to show its IP address  
     image: traefik/whoami
     labels:
       - "traefik.http.routers.whoami.rule=Host(`whoami.docker.localhost`) || Host(`10.3.0.21`)" #}
+
+networks:
+  traefik:
+    name: traefik_default
+    external: true
