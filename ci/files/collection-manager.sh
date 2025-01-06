@@ -91,6 +91,9 @@ echo "Processing Archive: $param. Mounted at ${SEARCH_ROOT_DIR}. Time for coffer
 create_collection () {
 mkdir -p ${COLLECTION_PATH}/archive
 mkdir -p ${COLLECTION_PATH}/indexes
+mkdir -p ${COLLECTION_PATH}/acl
+mkdir -p ${COLLECTION_PATH}/templates
+mkdir -p ${COLLECTION_PATH}/static
 # Following two dirs are not used yet, but we can create them for future use to split logs and temporary index files from collection root.
 mkdir -p ${COLLECTION_PATH}/logs
 mkdir -p ${COLLECTION_PATH}/tmp
