@@ -55,6 +55,8 @@
             src: "{{ item.src }}"
             dest: "{{ pywb_dir }}/{{ item.dest }}"
           loop:
+            - src: Dockerfile.j2
+              dest: Dockerfile
             - src: docker-compose.yaml.j2
               dest: docker-compose.yaml
             - src: config.yaml
@@ -87,3 +89,7 @@
               dest: "{{ pywb_dir }}/collection-manager.sh"
             - src: cdxj-manager.sh
               dest: "{{ pywb_dir }}/cdxj-manager.sh"
+        - name: "Logo"
+          copy: 
+            src: "logo.png"
+            dest: "{{ pywb_dir }}/logo.png"

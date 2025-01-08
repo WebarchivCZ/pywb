@@ -2,7 +2,7 @@ version: '3.0'
 
 services:
   pywb:
-    image: webrecorder/pywb:{{ pywb_tag }}
+    image: .
     volumes: 
       # PyWB configuration
       - "{{ pywb_dir }}/config.yaml:/webarchive/config.yaml"
