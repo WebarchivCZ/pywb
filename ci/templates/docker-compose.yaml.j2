@@ -26,7 +26,7 @@ services:
         target: /mnt/handsbery
         read_only: true
       # Custom logo
-      - "{{ pywb_dir }}/logo.png:/pywb/pywb/static/logo.png"
+      - "{{ pywb_dir }}/logo.png:/pywb/pywb/static/webarchiv-logo.png"
     labels:
       - {{ pywb_traefik_configuration }}
     networks:
