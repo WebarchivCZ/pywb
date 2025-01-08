@@ -2,7 +2,8 @@ version: '3.0'
 
 services:
   pywb:
-    image: .
+    build:
+      context: .
     volumes: 
       # PyWB configuration
       - "{{ pywb_dir }}/config.yaml:/webarchive/config.yaml"
