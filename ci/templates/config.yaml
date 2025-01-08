@@ -11,6 +11,11 @@ collections:
 
 collections_root: /webarchive/collections
 
+# UI
+ui:
+  logo: logo.png
+  logo_home_url: https://www.webarchiv.cz
+
 # Per-Collection Paths
 # archive_paths: archive
 # index_paths: indexes

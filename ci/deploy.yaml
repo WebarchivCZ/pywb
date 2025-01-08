@@ -87,3 +87,7 @@
               dest: "{{ pywb_dir }}/collection-manager.sh"
             - src: cdxj-manager.sh
               dest: "{{ pywb_dir }}/cdxj-manager.sh"
+        - name: "Logo"
+          copy:
+            src: logo.png
+            dest: "{{ pywb_dir }}/logo.png"
