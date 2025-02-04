@@ -8,7 +8,7 @@ set -o pipefail # catch non-zero exit code in pipes
 
 script_usage () {
 cat << EOF
-Webarchiv.cz collection manager create symlinks to archives in structured way. It translate physical structure of archives to pywb collections. Goal is to expose collections to curators in meaningful way.
+Webarchiv.cz collection manager creates symlinks to archives in structured way. It translates physical structure of archives to pywb collections. Goal is to expose collections to curators in meaningful way.
 
 Collection manager accepts only single parameter -> archive year in format YY.
 One of these: 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25.
@@ -37,7 +37,7 @@ case $param in
 			;;
 		14)
 			ARCHIVE_YEAR=14
-			SEARCH_ROOT_DIR="/mnt/datas/178/archive14 /mnt/datas/178/archive14 /mnt/datas/178/archive14Serials /mnt/datas/178/Archive14NDK-part /mnt/datas/180"
+			SEARCH_ROOT_DIR="/mnt/datas/178/archive14 /mnt/datas/178/archive14Serials /mnt/datas/178/Archive14NDK-part /mnt/datas/180"
 			;;
 		16)
 			ARCHIVE_YEAR=16
@@ -57,28 +57,28 @@ case $param in
 			;;
 		20)
 			ARCHIVE_YEAR=20
-			SEARCH_ROOT_DIR="/mnt/archive/20 /mnt/handsbery/manuals/2020"
+			SEARCH_ROOT_DIR="/mnt/archive/20"
 			;;
 		21)
 			ARCHIVE_YEAR=21
-			SEARCH_ROOT_DIR="/mnt/archive/21 /mnt/handsbery/manuals/2021"
+			SEARCH_ROOT_DIR="/mnt/archive/21"
 			;;
 		22)
 			ARCHIVE_YEAR=22
-			SEARCH_ROOT_DIR="/mnt/archive/22 /mnt/handsbery/manuals/2022"
+			SEARCH_ROOT_DIR="/mnt/archive/22"
 			;;
 		24)
 			ARCHIVE_YEAR=24
 			SEARCH_ROOT_DIR="/mnt/datas/181/archive24 /mnt/archive/24"
 			;;
-        05|06|07|08|09|10|11|12|15|23|25)
+		05|06|07|08|09|10|11|12|15|23|25)
 			ARCHIVE_YEAR=$param
 			SEARCH_ROOT_DIR=/mnt/archive/${ARCHIVE_YEAR}
-        	;;
-        *)
-        	"Invalid parameter was provided: $param"
+			;;
+		*)
+			echo "Invalid parameter was provided: $param"
 			exit 1
-        ;;
+			;;
 esac
 
 # Exported for availability in spawned find exec subshell
