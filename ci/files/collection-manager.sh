@@ -19,12 +19,12 @@ EOF
 }
 
 if [ $# -eq 0 ]; then
-        script_usage
-        exit 0
+	script_usage
+	exit 0
 elif [  $# -gt 1 ]; then
-        echo -e "Error! Too many parameters provided!\n"
-        script_usage
-        exit 1
+	echo -e "Error! Too many parameters provided!\n"
+	script_usage
+	exit 1
 fi
 
 
@@ -98,7 +98,7 @@ mkdir -p ${COLLECTION_PATH}/static
 mkdir -p ${COLLECTION_PATH}/logs
 mkdir -p ${COLLECTION_PATH}/tmp
 if [ ! -L ${COLLECTION_PATH}/archive/${ARCHIVE_NAME} ]; then
-        ln -s ${ARCHIVE_PATH} ${COLLECTION_PATH}/archive/
+	ln -s ${ARCHIVE_PATH} ${COLLECTION_PATH}/archive/
 fi
 }
 
@@ -110,106 +110,103 @@ COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-$(basename ${ARCHIVE_PATH
 
 
 case "${ARCHIVE_PATH_DIR}" in
-        *ArchiveIt*)
-                COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-ArchiveIt
-                # echo ArchiveIt Collection ${COLLECTION_PATH}
-                create_collection
-                ;;
-
-        *Continuous*)
-                case "${ARCHIVE_PATH_DIR}" in
-                        *UkraineWar*)
-                                COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Continuous-UkraineWar
-                                # echo UkraineWar - Continuous Collection ${COLLECTION_PATH}
-                                create_collection
-                                ;;
-                        *Cov19*)
-                                COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Continuous-Cov19
-                                # echo Covid19 - Continuous Collection ${COLLECTION_PATH}
-                                create_collection
-                                ;;
-                        *NewsDigest*)
-                                COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Continuous-NewsDigest
-                                # echo NewDigest - Continuous Collection ${COLLECTION_PATH}
-                                create_collection
-                                ;;
-                        *)
-								COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Continuous
-                                # echo Warning! Unknown Continuous Collection
-                                create_collection
-                                ;;
-                esac
-                ;;
-        *crawler*)
-                COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-NDK
-                # echo NDK Collection ${COLLECTION_PATH}
-                create_collection
-                ;;
+	*ArchiveIt*)
+		COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-ArchiveIt
+		# echo ArchiveIt Collection ${COLLECTION_PATH}
+		create_collection
+		;;
+	*Continuous*)
+		case "${ARCHIVE_PATH_DIR}" in
+			*UkraineWar*)
+				COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Continuous-UkraineWar
+				# echo UkraineWar - Continuous Collection ${COLLECTION_PATH}
+				create_collection
+				;;
+			*Cov19*)
+				COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Continuous-Cov19
+				# echo Covid19 - Continuous Collection ${COLLECTION_PATH}
+				create_collection
+				;;
+			*NewsDigest*)
+				COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Continuous-NewsDigest
+				# echo NewDigest - Continuous Collection ${COLLECTION_PATH}
+				create_collection
+				;;
+			*)
+				COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Continuous
+				# echo Warning! Unknown Continuous Collection
+				create_collection
+				;;
+		esac
+		;;
+	*crawler*)
+		COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-NDK
+		# echo NDK Collection ${COLLECTION_PATH}
+		create_collection
+		;;
 		*manuals*)
-                COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Manuals
-                # echo Manual Collection ${COLLECTION_PATH}
-                create_collection
-                ;;
+		COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Manuals
+		# echo Manual Collection ${COLLECTION_PATH}
+		create_collection
+		;;
 		*novaBudovaNK|*novaBudovaNK*)
-				COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}novaBudovaNK
-                # echo novaBudovaNK - Topics Collection ${COLLECTION_PATH}
-                create_collection
-				;;
+		COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}novaBudovaNK
+		# echo novaBudovaNK - Topics Collection ${COLLECTION_PATH}
+		create_collection
+		;;
 		*novaBudovaSTK|*novaBudovaSTK*)
-				COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}novaBudovaSTK
-                # echo novaBudovaSTK - Topics Collection ${COLLECTION_PATH}
-                create_collection
-				;;
-        *Serials*|*serials)
-                COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Serials
-                # echo Serials Collection ${COLLECTION_PATH}
-                create_collection
-                ;;
-        *Tests|*Tests*|*test_files|*test_files*|*Test|*Test*|*test_*)
-                COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Tests
-                # echo Tests Collection ${COLLECTION_PATH}
-                create_collection
-                ;;
-        *Topics*)
-                case "${ARCHIVE_PATH_DIR}" in
-                        *Cov19|*Cov19*|*covid19*|*covid19)
-                                COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Topics-Cov19
-                                # echo Cov19 - Topic Collection ${COLLECTION_PATH}
-                                create_collection
-                                ;;
-                        *PrezidentskeVolby2023|*PrezidentskeVolby2023*)
-                                COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Topics-PrezidentskeVolby2023
-                                # echo PrezidentskeVolby2023 - Topic Collection ${COLLECTION_PATH}
-                                create_collection
-                                ;;
-
-						*VolbyKrajeSenat2020|*VolbyKrajeSenat2020*)
-                                COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Topics-VolbyKrajeSenat2020
-                                # echo VolbyKrajeSenat2020 - Topic Collection ${COLLECTION_PATH}
-                                create_collection
-                                ;;
-						*verejnopravni_puvodci|*verejnopravni_puvodci*)
-                                COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Topics-verejnopravni_puvodci
-                                # echo verejnopravni_puvodci - Topic Collection ${COLLECTION_PATH}
-                                create_collection
-                                ;;
-						*Volby_PS|*Volby_PS*)
-                                COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Topics-Volby_PS
-                                # echo Volby_PS - Topic Collection ${COLLECTION_PATH}
-                                create_collection
-                                ;;
-
-                        *)
-                                # echo Warning! Unknown or Aggregated Topic Collection
-                                COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Topics
-                                create_collection
-                                ;;
-                esac
-                ;;
-        *)
-                # echo Standard Collection
-                create_collection
-        ;;
+		COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}novaBudovaSTK
+		# echo novaBudovaSTK - Topics Collection ${COLLECTION_PATH}
+		create_collection
+		;;
+	*Serials*|*serials)
+		COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Serials
+		# echo Serials Collection ${COLLECTION_PATH}
+		create_collection
+		;;
+	*Tests|*Tests*|*test_files|*test_files*|*Test|*Test*|*test_*)
+		COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Tests
+		# echo Tests Collection ${COLLECTION_PATH}
+		create_collection
+		;;
+	*Topics*)
+		case "${ARCHIVE_PATH_DIR}" in
+			*Cov19|*Cov19*|*covid19*|*covid19)
+			COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Topics-Cov19
+			# echo Cov19 - Topic Collection ${COLLECTION_PATH}
+			create_collection
+			;;
+			*PrezidentskeVolby2023|*PrezidentskeVolby2023*)
+			COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Topics-PrezidentskeVolby2023
+			# echo PrezidentskeVolby2023 - Topic Collection ${COLLECTION_PATH}
+			create_collection
+			;;
+			*VolbyKrajeSenat2020|*VolbyKrajeSenat2020*)
+			COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Topics-VolbyKrajeSenat2020
+			# echo VolbyKrajeSenat2020 - Topic Collection ${COLLECTION_PATH}
+			create_collection
+			;;
+			*verejnopravni_puvodci|*verejnopravni_puvodci*)
+			COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Topics-verejnopravni_puvodci
+			# echo verejnopravni_puvodci - Topic Collection ${COLLECTION_PATH}
+			create_collection
+			;;
+			*Volby_PS|*Volby_PS*)
+			COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Topics-Volby_PS
+			# echo Volby_PS - Topic Collection ${COLLECTION_PATH}
+			create_collection
+			;;
+		*)
+			# echo Warning! Unknown or Aggregated Topic Collection
+			COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Topics
+			create_collection
+			;;
+		esac
+		;;
+	*)
+		# echo Standard Collection
+		create_collection
+	;;
 esac
 
 }
