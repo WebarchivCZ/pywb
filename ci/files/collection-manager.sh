@@ -108,13 +108,7 @@ ARCHIVE_NAME=$(basename ${ARCHIVE_PATH})
 ARCHIVE_PATH_DIR=$(dirname ${ARCHIVE_PATH})
 COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-$(basename ${ARCHIVE_PATH_DIR})
 
-
 case "${ARCHIVE_PATH_DIR}" in
-	*ArchiveIt*)
-		COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-ArchiveIt
-		# echo ArchiveIt Collection ${COLLECTION_PATH}
-		create_collection
-		;;
 	*Continuous*)
 		case "${ARCHIVE_PATH_DIR}" in
 			*UkraineWar*)
@@ -139,24 +133,9 @@ case "${ARCHIVE_PATH_DIR}" in
 				;;
 		esac
 		;;
-	*crawler*)
-		COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-NDK
-		# echo NDK Collection ${COLLECTION_PATH}
-		create_collection
-		;;
-		*manuals*)
+	*manuals*)
 		COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Manuals
 		# echo Manual Collection ${COLLECTION_PATH}
-		create_collection
-		;;
-		*novaBudovaNK|*novaBudovaNK*)
-		COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}novaBudovaNK
-		# echo novaBudovaNK - Topics Collection ${COLLECTION_PATH}
-		create_collection
-		;;
-		*novaBudovaSTK|*novaBudovaSTK*)
-		COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}novaBudovaSTK
-		# echo novaBudovaSTK - Topics Collection ${COLLECTION_PATH}
 		create_collection
 		;;
 	*Serials*|*serials)
@@ -170,46 +149,25 @@ case "${ARCHIVE_PATH_DIR}" in
 		create_collection
 		;;
 	*Topics*)
-		case "${ARCHIVE_PATH_DIR}" in
-			*Cov19|*Cov19*|*covid19*|*covid19)
-			COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Topics-Cov19
-			# echo Cov19 - Topic Collection ${COLLECTION_PATH}
-			create_collection
-			;;
-			*PrezidentskeVolby2023|*PrezidentskeVolby2023*)
-			COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Topics-PrezidentskeVolby2023
-			# echo PrezidentskeVolby2023 - Topic Collection ${COLLECTION_PATH}
-			create_collection
-			;;
-			*VolbyKrajeSenat2020|*VolbyKrajeSenat2020*)
-			COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Topics-VolbyKrajeSenat2020
-			# echo VolbyKrajeSenat2020 - Topic Collection ${COLLECTION_PATH}
-			create_collection
-			;;
-			*verejnopravni_puvodci|*verejnopravni_puvodci*)
-			COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Topics-verejnopravni_puvodci
-			# echo verejnopravni_puvodci - Topic Collection ${COLLECTION_PATH}
-			create_collection
-			;;
-			*Volby_PS|*Volby_PS*)
-			COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Topics-Volby_PS
-			# echo Volby_PS - Topic Collection ${COLLECTION_PATH}
-			create_collection
-			;;
-		*)
-			# echo Warning! Unknown or Aggregated Topic Collection
-			COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Topics
-			create_collection
-			;;
-		esac
-		;;
-	*)
-		# echo Standard Collection
+		COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Topics
 		create_collection
-	;;
+		;;
+	*Totals*|*totals*)
+		COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Totals
+		create_collection
+		;;
+	# *)
+	# 	# echo Standard Collection
+	# 	create_collection
+	# ;;
+
 esac
 
+# Also always create (and add link to) the entire year collection
+COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-All
+create_collection
 }
+
 # Make function available in shell spawned by find exec
 export -f create_collection_structure
 export -f create_collection
