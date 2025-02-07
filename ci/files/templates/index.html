@@ -1,14 +1,25 @@
 {% extends "base.html" %}
 {% block body %}
+{% set special_collection_routes = ['wayback', 'live'] %}
 <div class="container">
     <div class="row">
         <h2 class="display-2">{{ _('Pywb Wayback Machine') }}</h2>
         <h3>Hello world. If you see this message, that means it worked! Try 2</h3>
-        <p class="lead">{{ _('This archive contains the following collections:') }}</p>
     </div>
     <div class="row">
+        <h3>Special collections:</h3>
         <ul>
-            {% for route in routes | sort %}
+            {% for route in special_collection_routes %}
+                <li>
+                    <a href="{{ env['pywb.app_prefix'] + ('/' + env.pywb_lang if env.pywb_lang else '') + '/' + route }}">{{ '/' + route }}</a>
+                </li>
+            {%  endfor %}
+        </ul>
+    </div>
+    <div class="row">
+        <h3>{{ _('This archive contains the following collections:') }}</h3>
+        <ul>
+            {% for route in routes if route not in special_collection_routes | sort %}
                 <li>
                     <a href="{{ env['pywb.app_prefix'] + ('/' + env.pywb_lang if env.pywb_lang else '') + '/' + route }}">{{ '/' + route }}</a>
                     {% if all_metadata and all_metadata[route] and all_metadata[route].title %}
