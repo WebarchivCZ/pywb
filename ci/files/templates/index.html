@@ -8,7 +8,8 @@
     </div>
     <div class="row">
         <h4>Special collections:</h4>
-        <br>
+    </div>
+    <div class="row">
         <ul>
             {% for route in special_collection_routes %}
                 <li>
@@ -18,7 +19,9 @@
         </ul>
     </div>
     <div class="row">
-        <h4>{{ _('This archive contains the following collections:') }}</h4>
+        <h4>Collections by year and type:</h4>
+    </div>
+    <div class="row">
         <br>
         <ul>
             {% for route in routes | sort %}
