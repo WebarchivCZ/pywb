@@ -7,7 +7,8 @@
         <h3>Hello world. If you see this message, that means it worked! Try 2</h3>
     </div>
     <div class="row">
-        <h3>Special collections:</h3>
+        <h4>Special collections:</h4>
+        <br>
         <ul>
             {% for route in special_collection_routes %}
                 <li>
@@ -17,15 +18,18 @@
         </ul>
     </div>
     <div class="row">
-        <h3>{{ _('This archive contains the following collections:') }}</h3>
+        <h4>{{ _('This archive contains the following collections:') }}</h4>
+        <br>
         <ul>
-            {% for route in routes if route not in special_collection_routes | sort %}
+            {% for route in routes | sort %}
+                {% if route not in special_collection_routes %}
                 <li>
                     <a href="{{ env['pywb.app_prefix'] + ('/' + env.pywb_lang if env.pywb_lang else '') + '/' + route }}">{{ '/' + route }}</a>
                     {% if all_metadata and all_metadata[route] and all_metadata[route].title %}
                         ({{ all_metadata[route].title }})
                     {% endif %}
                 </li>
+                {% endif %}
             {% endfor %}
         </ul>
     </div>
