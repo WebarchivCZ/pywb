@@ -24,7 +24,7 @@
     <div class="row">
         <br>
         <ul>
-            {% for route in routes | sort %}
+            {% for route in routes | sort | reverse %}
                 {% if route not in special_collection_routes %}
                 <li>
                     <a href="{{ env['pywb.app_prefix'] + ('/' + env.pywb_lang if env.pywb_lang else '') + '/' + route }}">{{ '/' + route }}</a>
