@@ -19,7 +19,8 @@ collections_root: /webarchive/collections
 
 # default_access: allow
 
-templates_dir: /mnt/ui/templates
+# This does notseem to work
+# templates_dir: /mnt/ui/templates
 
 # Template HTML
 # banner_html: banner.html

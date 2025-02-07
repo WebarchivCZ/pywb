@@ -28,7 +28,7 @@ services:
       # Custom ui
       - type: bind
         source: "{{ pywb_dir }}/ui"
-        target: /mnt/ui
+        target: /webarchive
         read_only: true
     labels:
       - {{ pywb_traefik_configuration }}
