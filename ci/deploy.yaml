@@ -87,3 +87,7 @@
               dest: "{{ pywb_dir }}/collection-manager.sh"
             - src: cdxj-manager.sh
               dest: "{{ pywb_dir }}/cdxj-manager.sh"
+        - name: "Custom HTML Templates"
+          copy:
+            src: templates/
+            dest: "{{ pywb_dir }}/ui/templates/"

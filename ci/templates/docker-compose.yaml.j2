@@ -25,6 +25,11 @@ services:
         source: /mnt/handsbery
         target: /mnt/handsbery
         read_only: true
+      # Custom ui
+      - type: bind
+        source: "{{ pywb_dir }}/ui"
+        target: /mnt/ui
+        read_only: true
     labels:
       - {{ pywb_traefik_configuration }}
     networks:
