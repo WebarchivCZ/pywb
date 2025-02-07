@@ -27,8 +27,8 @@ services:
         read_only: true
       # Custom ui
       - type: bind
-        source: "{{ pywb_dir }}/ui"
-        target: /webarchive
+        source: "{{ pywb_dir }}/ui/templates"
+        target: /webarchive/templates
         read_only: true
     labels:
       - {{ pywb_traefik_configuration }}
