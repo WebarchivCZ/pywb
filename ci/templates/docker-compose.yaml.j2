@@ -32,7 +32,7 @@ services:
         read_only: true
       # Custom static files
       - type: bind
-        source: "{{ pywb_dir }}/ui/templates"
+        source: "{{ pywb_dir }}/ui/static"
         target: /webarchive/static
         read_only: true
     labels:
