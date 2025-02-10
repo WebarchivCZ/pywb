@@ -25,10 +25,15 @@ services:
         source: /mnt/handsbery
         target: /mnt/handsbery
         read_only: true
-      # Custom ui
+      # Custom templates
       - type: bind
         source: "{{ pywb_dir }}/ui/templates"
         target: /webarchive/templates
+        read_only: true
+      # Custom static files
+      - type: bind
+        source: "{{ pywb_dir }}/ui/templates"
+        target: /webarchive/static
         read_only: true
     labels:
       - {{ pywb_traefik_configuration }}

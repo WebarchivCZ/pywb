@@ -91,3 +91,7 @@
           copy:
             src: templates/
             dest: "{{ pywb_dir }}/ui/templates/"
+        - name: "Custom static files"
+          copy:
+            src: static/
+            dest: "{{ pywb_dir }}/ui/static"

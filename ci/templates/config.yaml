@@ -11,6 +11,10 @@ collections:
 
 collections_root: /webarchive/collections
 
+ui:
+  logo: logo.png
+  logo_home_url: /
+
 # Per-Collection Paths
 # archive_paths: archive
 # index_paths: indexes
