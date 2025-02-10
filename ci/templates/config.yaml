@@ -10,6 +10,7 @@ collections:
   live: $live
 
 collections_root: /webarchive/collections
+static_dir: /webarchive/static
 
 ui:
   logo: logo.png
