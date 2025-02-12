@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% block body %}
-{% set special_collection_routes = ['wayback', 'live'] %}
 <div class="container">
     <div class="row">
-        <h4>Special collections:</h4>
+        <h4>Hlavní kolekce:</h4>
     </div>
     <div class="row">
         <ul>
+            {% set special_collection_routes = ['wayback', 'live'] %}
             {% for route in special_collection_routes %}
                 <li>
                     <a href="{{ env['pywb.app_prefix'] + ('/' + env.pywb_lang if env.pywb_lang else '') + '/' + route }}">{{ '/' + route }}</a>
@@ -15,22 +15,23 @@
         </ul>
     </div>
     <div class="row">
-        <h4>Collections by year and type:</h4>
+        <h4>Ostatní kolekce:</h4>
     </div>
     <div class="row">
         <br>
-        <ul>
-            {% for route in routes | sort | reverse %}
-                {% if route not in special_collection_routes %}
-                <li>
-                    <a href="{{ env['pywb.app_prefix'] + ('/' + env.pywb_lang if env.pywb_lang else '') + '/' + route }}">{{ '/' + route }}</a>
-                    {% if all_metadata and all_metadata[route] and all_metadata[route].title %}
-                        ({{ all_metadata[route].title }})
+            {% for year in range(5, 25) | reverse %}
+            {% set year_str = "{:02d}".format(year) %}
+            <p>{{ year_str }}</p>
+            <ul>
+                {% for route in routes | sort %}
+                    {% if route not in special_collection_routes and year_str in route %}
+                        <li>
+                            <a href="{{ env['pywb.app_prefix'] + ('/' + env.pywb_lang if env.pywb_lang else '') + '/' + route }}">{{ '/' + route }}</a>
+                        </li>
                     {% endif %}
-                </li>
-                {% endif %}
+                {% endfor %}
+            </ul>
             {% endfor %}
-        </ul>
     </div>
 </div>
 {% endblock %}
