@@ -23,7 +23,7 @@
         {% set year_str = "{:02d}".format(year) %}
         <div class="list-group m-2">
             {% for route in routes | sort %}
-                {% if route not in special_collection_routes and year_str in route %}
+                {% if route not in special_collection_routes and route.startswith(year_str) %}
                     <a
                     class="list-group-item list-group-item-action wa-blue"
                     href="{{ env['pywb.app_prefix'] + ('/' + env.pywb_lang if env.pywb_lang else '') + '/' + route }}">{{ '/' + route }}
