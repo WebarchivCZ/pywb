@@ -24,21 +24,24 @@ Webarchiv - {{ coll }}
 {% endblock %}
 
 {% block body %}
-<div class="container mt4">
-    <div class="row justify-content-center">
-        <a href="https://www.webarchiv.cz" class="wa-logo">Webarchiv</a>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="row ml-5">
+                <a href="https://www.webarchiv.cz/" class="wa-logo">Webarchiv</a>
+            </div>
+            <div class="row ml-5">
+                <p class="italic wa-text">památník českého internetu, <a href="https://www.webarchiv.cz/cs/jsme-webarchiv">více</a></p>
+            </div>
+        </div>
+        <div class="col mr-5">
+            <div class="row justify-content-end">
+                <a href="https://nkp.cz">
+                    <img src="{{ static_prefix }}/logo_NK.svg" alt="Národní Knihovna">
+                </a>
+            </div>
+        </div>
     </div>
-    <div class="row justify-content-center">
-        <p class="italic wa-text">památník českého internetu, <a href="https://www.webarchiv.cz/cs/jsme-webarchiv">více</a></p>
-    </div>
-    <div class="row justify-content-center">
-        <p class="wa-text">
-            Výtejte ve Waybacku Webarchivu<br>
-            Pro prohlížení archivních verzí webových stránek zadejte požadovanou URL adresu do vyhledávače níže<br>
-            Upozornění: Přecházíme na novou zobrazovací aplikaci PyWayback a v tuto chvíli jsou nedostupná některá data z důvodu migrace indexů
-        </p>
-    </div>
-</div>
 </div>
 <div class="container mt-4">
     <hr class="wa-hr">
@@ -210,8 +213,13 @@ Webarchiv - {{ coll }}
         </div>
     </div>
 {% endif %}
-{% include "instructions.html" %}
-<div class="container mt4 wa-margin-top">
+<div class="container mt-5">
+    <div class="row">
+        <h4 class="">Vítejte v nové zobrazovací aplikaci Pywayback</h4>
+        <p class="wa-text">V tuto chvíli stále pracujeme na kompletním zprovoznění, omluvte proto nedostupnost některých dat.</p>
+    </div>
+</div>
+<div class="container mt-4">
     <hr class="wa-hr">
     <div class="row">
         <div class="col wa-text">
@@ -220,4 +228,5 @@ Webarchiv - {{ coll }}
         </div>
     </div>
 </div>
+{% include "instructions.html" %}
 {% endblock %}
