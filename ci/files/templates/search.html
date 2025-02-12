@@ -24,30 +24,7 @@ Webarchiv - {{ coll }}
 {% endblock %}
 
 {% block body %}
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <div class="row ml-5">
-                <a href="https://www.webarchiv.cz/" class="wa-logo">Webarchiv</a>
-            </div>
-            <div class="row ml-5">
-                <p class="italic wa-text">památník českého internetu, <a href="https://www.webarchiv.cz/cs/jsme-webarchiv">více</a></p>
-            </div>
-        </div>
-        <div class="col mr-5">
-            <div class="row justify-content-end">
-                <a href="https://nkp.cz">
-                    <img src="{{ static_prefix }}/logo_NK.svg" alt="Národní Knihovna">
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="container mt-4">
-    <hr class="wa-hr">
-    <div class="row justify-content-center">
-        <p class="display-4 wa-big">{{ coll }}</p>
-    </div>
     <form class="needs-validation" id="search-form" novalidate>
         <div class="form-row">
             <div class="col-12">
@@ -217,15 +194,6 @@ Webarchiv - {{ coll }}
     <div class="row">
         <h4 class="">Vítejte v nové zobrazovací aplikaci Pywayback</h4>
         <p class="wa-text">V tuto chvíli stále pracujeme na kompletním zprovoznění, omluvte proto nedostupnost některých dat.</p>
-    </div>
-</div>
-<div class="container mt-4">
-    <hr class="wa-hr">
-    <div class="row">
-        <div class="col wa-text">
-            <a href="https://www.webarchiv.cz">Webarchiv</a> je součástí<br>
-            <a href="https://nkp.cz">Národní knihovny ČR</a>
-        </div>
     </div>
 </div>
 {% include "instructions.html" %}
