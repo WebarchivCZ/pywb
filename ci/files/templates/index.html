@@ -5,10 +5,10 @@
         <h4>Hlavní kolekce:</h4>
     </div>
     <div class="row">
-        <ul>
+        <ul class="list-group">
             {% set special_collection_routes = ['wayback', 'live'] %}
             {% for route in special_collection_routes %}
-                <li>
+                <li class="list-group-item">
                     <a href="{{ env['pywb.app_prefix'] + ('/' + env.pywb_lang if env.pywb_lang else '') + '/' + route }}">{{ '/' + route }}</a>
                 </li>
             {%  endfor %}
@@ -17,21 +17,20 @@
     <div class="row">
         <h4>Ostatní kolekce:</h4>
     </div>
-    <div class="row">
-        <br>
-            {% for year in range(5, 25) | reverse %}
-            {% set year_str = "{:02d}".format(year) %}
-            <p>{{ year_str }}</p>
-            <ul>
-                {% for route in routes | sort %}
-                    {% if route not in special_collection_routes and year_str in route %}
-                        <li>
-                            <a href="{{ env['pywb.app_prefix'] + ('/' + env.pywb_lang if env.pywb_lang else '') + '/' + route }}">{{ '/' + route }}</a>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
+    <div class="row d-flex flex-wrap">
+        {% for year in range(5, 25) | reverse %}
+        {% set year_str = "{:02d}".format(year) %}
+        <div class="list-group">
+            {% for route in routes | sort %}
+                {% if route not in special_collection_routes and year_str in route %}
+                    <a
+                    class="list-group-item list-group-item-action"
+                    href="{{ env['pywb.app_prefix'] + ('/' + env.pywb_lang if env.pywb_lang else '') + '/' + route }}">{{ '/' + route }}
+                    </a>
+                {% endif %}
             {% endfor %}
+        </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
