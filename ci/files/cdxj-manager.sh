@@ -26,22 +26,26 @@ elif [  $# -gt 1 ]; then
         exit 1
 fi
 
-export COLLECTION_NAME=$1
-export COLLECTIONS_ROOT_PATH=/mnt/index/collections
-export COLLECTION_PATH=${COLLECTIONS_ROOT_PATH}/${COLLECTION_NAME}
-export COLLECTION_ARCHIVE_PATH=${COLLECTION_PATH}/archive
-export COLLECTION_INDEXES_PATH=${COLLECTION_PATH}/indexes
-export COLLECTION_INDEX=${COLLECTION_PATH}/indexes/index.cdxj
-export INDEX_BACKUP_PATH=/mnt/index/cdxj-archive
-export INDEX_BACKUP_LOGS_PATH=/mnt/index/cdxj-archive/logs
-export INDEXER=cdxj-indexer
+export COLLECTION_NAME="$1"
+export COLLECTIONS_ROOT_PATH="/mnt/index/collections"
+export COLLECTION_PATH="${COLLECTIONS_ROOT_PATH}/${COLLECTION_NAME}"
+export COLLECTION_ARCHIVE_PATH="${COLLECTION_PATH}/archive"
+export COLLECTION_INDEXES_PATH="${COLLECTION_PATH}/indexes"
+export COLLECTION_INDEX="${COLLECTION_PATH}/indexes/index.cdxj"
+export INDEX_BACKUP_PATH="/mnt/index/cdxj-archive"
+export INDEX_BACKUP_LOGS_PATH="/mnt/index/cdxj-archive/logs"
+export INDEXER="cdxj-indexer"
+export COLLECTION_TMP_PATH="${COLLECTION_PATH}/tmp"
 
 echo "[$(date -u --iso-8601=seconds)] Processing ${COLLECTION_NAME}"
 create_index () {
-    ARCHIVE_PATH=$1
-    ARCHIVE_NAME=$(basename ${ARCHIVE_PATH})
-    INDEX_PATH=${COLLECTION_PATH}/${ARCHIVE_NAME}.cdxj
-    if [ -f ${INDEX_BACKUP_PATH}/${ARCHIVE_NAME}.cdxj ]; then
+        ARCHIVE_PATH="$1"
+        ARCHIVE_NAME="$(basename ${ARCHIVE_PATH})"
+        INDEX_PATH="${COLLECTION_TMP_PATH}/${ARCHIVE_NAME}.cdxj"
+        if [ -f ${INDEX_PATH} ]; then
+                echo "[$(date -u --iso-8601=seconds)] Index for ${ARCHIVE_NAME} already found in collection. No action required." \
+                        >> ${COLLECTION_PATH}/$(date -u --iso-8601).log
+        elif [ -f ${INDEX_BACKUP_PATH}/${ARCHIVE_NAME}.cdxj ]; then
                 echo "[$(date -u --iso-8601=seconds)] Index for ${ARCHIVE_NAME} already exists in cdxj-archive. Making local copy instead of indexing." \
                         >> ${COLLECTION_PATH}/$(date -u --iso-8601).log
                 cp ${INDEX_BACKUP_PATH}/${ARCHIVE_NAME}.cdxj ${INDEX_PATH}
@@ -52,19 +56,29 @@ create_index () {
                         2> ${INDEX_BACKUP_LOGS_PATH}/${ARCHIVE_NAME}.cdxj.stderr
                 # Delete empty stderr logs
                 [ -s ${INDEX_BACKUP_LOGS_PATH}/${ARCHIVE_NAME}.cdxj.stderr ] || rm ${INDEX_BACKUP_LOGS_PATH}/${ARCHIVE_NAME}.cdxj.stderr
-    fi
+                # copy new index file to backup dir
+                cp "${INDEX_PATH}" "${INDEX_BACKUP_PATH}/"
+        fi
 }
 
 export -f create_index
 
-/usr/bin/time -v find ${COLLECTION_ARCHIVE_PATH} -type l \( -name "*.warc.gz" -o -name "*.arc.gz" \) -exec bash -c 'create_index "$0"' {} \;
+/usr/bin/time --format='elapsed wall time: %E\ncpu: %P\nuser: %U\nsys: %S' \
+        find ${COLLECTION_ARCHIVE_PATH} -type l \( -name "*.warc.gz" -o -name "*.arc.gz" \) -exec bash -c 'create_index "$0"' {} \;
 
 echo "Archive indexes created in ${COLLECTION_PATH}/"
+
 echo "[$(date -u --iso-8601=seconds)] Merging & sorting all indexes to ${COLLECTION_INDEX}"
-LANG=C.UTF-8 /usr/bin/time -v sort ${COLLECTION_PATH}/*.cdxj > ${COLLECTION_INDEX}
+# Use find to cat the files into sort, globular expressions cannot work, becouse we reached the limit on number of arguments
+# LANG=C.UTF-8 /usr/bin/time --format='elapsed wall time: %E\ncpu: %P\nuser: %U\nsys: %S' \ # uncomment for process info
+find ${COLLECTION_PATH} -type f -name '*.cdxj' -exec cat '{}' \; | sort -u > ${COLLECTION_INDEX}
 echo "[$(date -u --iso-8601=seconds)] Collection ${COLLECTION_NAME} index created in ${COLLECTION_INDEX}"
-echo "Moving archive indexes to ${INDEX_BACKUP_PATH}"
-mv ${COLLECTION_PATH}/*.cdxj ${INDEX_BACKUP_PATH}/
-echo "Indexes moved to ${INDEX_BACKUP_PATH}. Nothing left to do. My work is done. Happy Oink! <=~"
+
+# Don't move indexes to the dir we just copied them from
+# echo "Moving archive indexes to ${INDEX_BACKUP_PATH}"
+# mv ${COLLECTION_PATH}/*.cdxj ${INDEX_BACKUP_PATH}/
+# TODO: remove old indexes from collection/tmp, I will first do some testing
+
+echo "Finished indexing collection ${COLLECTION_NAME}. Nothing left to do. My work is done. Happy Oink! <=~"
 echo "Check out https://pywb.webarchiv.cz/${COLLECTION_NAME}/"
 echo "[$(date -u --iso-8601=seconds)] Collection Ready" >> ${COLLECTION_PATH}/$(date -u --iso-8601).log
