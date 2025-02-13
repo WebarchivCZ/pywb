@@ -71,13 +71,13 @@ echo "Archive indexes created in ${COLLECTION_PATH}/"
 echo "[$(date -u --iso-8601=seconds)] Merging & sorting all indexes to ${COLLECTION_INDEX}"
 # Use find to cat the files into sort, globular expressions cannot work, becouse we reached the limit on number of arguments
 # LANG=C.UTF-8 /usr/bin/time --format='elapsed wall time: %E\ncpu: %P\nuser: %U\nsys: %S' \ # uncomment for process info
-find ${COLLECTION_PATH} -type f -name '*.cdxj' -exec cat '{}' \; | sort -u > ${COLLECTION_INDEX}
+find "${COLLECTION_TMP_PATH}" -type f -name '*.cdxj' -exec cat '{}' \; | sort -u > ${COLLECTION_INDEX}
 echo "[$(date -u --iso-8601=seconds)] Collection ${COLLECTION_NAME} index created in ${COLLECTION_INDEX}"
 
-# Don't move indexes to the dir we just copied them from
-# echo "Moving archive indexes to ${INDEX_BACKUP_PATH}"
-# mv ${COLLECTION_PATH}/*.cdxj ${INDEX_BACKUP_PATH}/
-# TODO: remove old indexes from collection/tmp, I will first do some testing
+# Remove indexes from tmp directory
+echo "[$(date -u --iso-8601=seconds)] Removing old files from ${COLLECTION_TMP_PATH}"
+find "${COLLECTION_TMP_PATH}" -maxdepth 1 -type f -name '*.cdxj' -exec rm '{}' \;
+echo "[$(date -u --iso-8601=seconds)] Done removing old files"
 
 echo "Finished indexing collection ${COLLECTION_NAME}. Nothing left to do. My work is done. Happy Oink! <=~"
 echo "Check out https://pywb.webarchiv.cz/${COLLECTION_NAME}/"
