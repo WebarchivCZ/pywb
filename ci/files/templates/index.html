@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h4>Hlavní kolekce:</h4>
+    </div>
+    <div class="row">
+        <div class="list-group m-2">
+            {% set special_collection_routes = ['wayback', 'live'] %}
+            {% for route in special_collection_routes %}
+                <a
+                class="list-group-item list-group-item-action wa-blue"
+                href="{{ env['pywb.app_prefix'] + ('/' + env.pywb_lang if env.pywb_lang else '') + '/' + route }}">{{ '/' + route }}
+                </a>
+            {%  endfor %}
+            </div>
+    </div>
+    <div class="row">
+        <h4>Ostatní kolekce:</h4>
+    </div>
+    <div class="row d-flex flex-wrap">
+        {% for year in range(5, 25) | reverse %}
+        {% set year_str = "{:02d}".format(year) %}
+        <div class="list-group m-2">
+            {% for route in routes | sort %}
+                {% if route not in special_collection_routes and route.startswith(year_str) %}
+                    <a
+                    class="list-group-item list-group-item-action wa-blue"
+                    href="{{ env['pywb.app_prefix'] + ('/' + env.pywb_lang if env.pywb_lang else '') + '/' + route }}">{{ '/' + route }}
+                    </a>
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
