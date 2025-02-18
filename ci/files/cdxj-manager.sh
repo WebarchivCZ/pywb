@@ -71,7 +71,7 @@ echo "Archive indexes created in ${COLLECTION_PATH}/"
 echo "[$(date -u --iso-8601=seconds)] Merging & sorting all indexes to ${COLLECTION_INDEX}"
 # Use find to cat the files into sort, globular expressions cannot work, becouse we reached the limit on number of arguments
 # LANG=C.UTF-8 /usr/bin/time --format='elapsed wall time: %E\ncpu: %P\nuser: %U\nsys: %S' \ # uncomment for process info
-find "${COLLECTION_TMP_PATH}" -type f -name '*.cdxj' -exec cat '{}' \; | sort -u > ${COLLECTION_INDEX}
+find "${COLLECTION_TMP_PATH}" -type f -name '*.cdxj' -exec cat '{}' \; | LANG=C.UTF-8 sort -u > ${COLLECTION_INDEX}
 echo "[$(date -u --iso-8601=seconds)] Collection ${COLLECTION_NAME} index created in ${COLLECTION_INDEX}"
 
 # Remove indexes from tmp directory
