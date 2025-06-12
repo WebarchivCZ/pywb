@@ -66,7 +66,7 @@ create_index () {
 export -f create_index
 
 /usr/bin/time --format='elapsed wall time: %E\ncpu: %P\nuser: %U\nsys: %S' \
-        find ${COLLECTION_ARCHIVE_PATH} -type l \( -name "*.warc.gz" -o -name "*.arc.gz" \) -exec bash -c 'create_index "$0"' {} \;
+        find ${COLLECTION_ARCHIVE_PATH} -type l \( -name "*.warc.gz" -o -name "*.arc.gz" -o -name "*.warc" \) -exec bash -c 'create_index "$0"' {} \;
 
 echo "Archive indexes created in ${COLLECTION_PATH}/"
 

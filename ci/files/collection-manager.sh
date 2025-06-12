@@ -184,7 +184,7 @@ export -f create_collection_structure
 export -f create_collection
 
 # Find splitting argument from find outuput in exec should be safer according to stracktrace
-find ${SEARCH_ROOT_DIR} -type f \( -name "*.warc.gz" -o -name "*.arc.gz" \) -exec bash -c 'create_collection_structure "$0"' {} \;
+find ${SEARCH_ROOT_DIR} -type f \( -name "*.warc.gz" -o -name "*.arc.gz" -o -name "*.warc" \) -exec bash -c 'create_collection_structure "$0"' {} \;
 
 #echo symbolic links to archives prexising\t ${ARCHIVE_SYMLINK_EXISTS_COUNT}
 #echo symbolic links to archives created\t ${ARCHIVE_SYMLINK_CREATED_COUNT}
