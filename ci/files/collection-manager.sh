@@ -28,12 +28,19 @@ elif [  $# -gt 1 ]; then
 fi
 
 
-# /mnt/archive/15 is empty and nowhere to be found.
 param="$1"
 case $param in
-		13)
-			ARCHIVE_YEAR=13
-			SEARCH_ROOT_DIR=/mnt/datas/178/archive13
+		05|06|07|08|09|10)
+			ARCHIVE_YEAR=$param
+			SEARCH_ROOT_DIR="/mnt/archive/WA2005-2010/archive${ARCHIVE_YEAR}"
+			;;
+		11|12)
+			ARCHIVE_YEAR=$param
+			SEARCH_ROOT_DIR="/mnt/archive/WA2011_2012/archive${ARCHIVE_YEAR}"
+			;;
+		13|15)
+			ARCHIVE_YEAR=$param
+			SEARCH_ROOT_DIR="/mnt/archive/WA2013_2015/archive${ARCHIVE_YEAR}"
 			;;
 		14)
 			ARCHIVE_YEAR=14
@@ -41,19 +48,19 @@ case $param in
 			;;
 		16)
 			ARCHIVE_YEAR=16
-			SEARCH_ROOT_DIR=/mnt/datas/181/archive16
+			SEARCH_ROOT_DIR="/mnt/datas/181/archive16"
 			;;
 		17)
 			ARCHIVE_YEAR=17
-			SEARCH_ROOT_DIR=/mnt/datas/181/archive17
+			SEARCH_ROOT_DIR="/mnt/datas/181/archive17"
 			;;
 		18)
 			ARCHIVE_YEAR=18
-			SEARCH_ROOT_DIR=/mnt/datas/179/archive18
+			SEARCH_ROOT_DIR="/mnt/datas/179/archive18"
 			;;
 		19)
 			ARCHIVE_YEAR=19
-			SEARCH_ROOT_DIR=/mnt/datas/181/archive19
+			SEARCH_ROOT_DIR="/mnt/datas/181/archive19"
 			;;
 		20)
 			ARCHIVE_YEAR=20
@@ -75,9 +82,9 @@ case $param in
 			ARCHIVE_YEAR=25
 			SEARCH_ROOT_DIR="/mnt/datas/178/archive25"
 			;;
-		05|06|07|08|09|10|11|12|15|23)
+		23)
 			ARCHIVE_YEAR=$param
-			SEARCH_ROOT_DIR=/mnt/archive/${ARCHIVE_YEAR}
+			SEARCH_ROOT_DIR="/mnt/archive/23"
 			;;
 		*)
 			echo "Invalid parameter was provided: $param"

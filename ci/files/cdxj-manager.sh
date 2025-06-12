@@ -36,6 +36,8 @@ export INDEX_BACKUP_PATH="/mnt/index/cdxj-archive"
 export INDEX_BACKUP_LOGS_PATH="/mnt/index/cdxj-archive/logs"
 export INDEXER="cdxj-indexer"
 export COLLECTION_TMP_PATH="${COLLECTION_PATH}/tmp"
+export COLLECTION_LOGS_PATH="${COLLECTION_PATH}/logs"
+export SORT_TMP_PATH="/mnt/index/sort-tmp/" # Directory used to store temporary files by the sort command. Needs at least few TB of free space.
 
 echo "[$(date -u --iso-8601=seconds)] Processing ${COLLECTION_NAME}"
 create_index () {
@@ -44,14 +46,14 @@ create_index () {
         INDEX_PATH="${COLLECTION_TMP_PATH}/${ARCHIVE_NAME}.cdxj"
         if [ -f ${INDEX_PATH} ]; then
                 echo "[$(date -u --iso-8601=seconds)] Index for ${ARCHIVE_NAME} already found in collection. No action required." \
-                        >> ${COLLECTION_PATH}/$(date -u --iso-8601).log
+                        >> ${COLLECTION_LOGS_PATH}/$(date -u --iso-8601).log
         elif [ -f ${INDEX_BACKUP_PATH}/${ARCHIVE_NAME}.cdxj ]; then
                 echo "[$(date -u --iso-8601=seconds)] Index for ${ARCHIVE_NAME} already exists in cdxj-archive. Making local copy instead of indexing." \
-                        >> ${COLLECTION_PATH}/$(date -u --iso-8601).log
+                        >> ${COLLECTION_LOGS_PATH}/$(date -u --iso-8601).log
                 cp ${INDEX_BACKUP_PATH}/${ARCHIVE_NAME}.cdxj ${INDEX_PATH}
         else
                 echo "[$(date -u --iso-8601=seconds)] Processing ${ARCHIVE_PATH} into ${INDEX_PATH}" \
-                        >> ${COLLECTION_PATH}/$(date -u --iso-8601).log
+                        >> ${COLLECTION_LOGS_PATH}/$(date -u --iso-8601).log
                 ${INDEXER} -s ${ARCHIVE_PATH} -o ${INDEX_PATH} \
                         2> ${INDEX_BACKUP_LOGS_PATH}/${ARCHIVE_NAME}.cdxj.stderr
                 # Delete empty stderr logs
@@ -69,9 +71,8 @@ export -f create_index
 echo "Archive indexes created in ${COLLECTION_PATH}/"
 
 echo "[$(date -u --iso-8601=seconds)] Merging & sorting all indexes to ${COLLECTION_INDEX}"
-# Use find to cat the files into sort, globular expressions cannot work, becouse we reached the limit on number of arguments
-# LANG=C.UTF-8 /usr/bin/time --format='elapsed wall time: %E\ncpu: %P\nuser: %U\nsys: %S' \ # uncomment for process info
-find "${COLLECTION_TMP_PATH}" -type f -name '*.cdxj' -exec cat '{}' \; | LANG=C.UTF-8 sort -u > ${COLLECTION_INDEX}
+# Use find to print0 file names into sort, globular expressions cannot work, becouse we reached the limit on number of arguments
+find "${COLLECTION_TMP_PATH}" -type f -name '*.cdxj' -print0 | LANG=C.UTF-8 sort -u --files0-from=- -T ${SORT_TMP_PATH} > ${COLLECTION_INDEX}
 echo "[$(date -u --iso-8601=seconds)] Collection ${COLLECTION_NAME} index created in ${COLLECTION_INDEX}"
 
 # Remove indexes from tmp directory
@@ -81,4 +82,4 @@ echo "[$(date -u --iso-8601=seconds)] Done removing old files"
 
 echo "Finished indexing collection ${COLLECTION_NAME}. Nothing left to do. My work is done. Happy Oink! <=~"
 echo "Check out https://pywb.webarchiv.cz/${COLLECTION_NAME}/"
-echo "[$(date -u --iso-8601=seconds)] Collection Ready" >> ${COLLECTION_PATH}/$(date -u --iso-8601).log
+echo "[$(date -u --iso-8601=seconds)] Collection Ready" >> ${COLLECTION_LOGS_PATH}/$(date -u --iso-8601).log
