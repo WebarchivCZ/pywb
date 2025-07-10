@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{% block header %}
+    {# We don't want any header in index view #}
+{% endblock %}
 {% block body %}
 <div class="container">
     <div class="row">
@@ -34,4 +37,7 @@
         {% endfor %}
     </div>
 </div>
+{% endblock %}
+{% block footer %}
+    {# We don't want any footer in index view #}
 {% endblock %}
