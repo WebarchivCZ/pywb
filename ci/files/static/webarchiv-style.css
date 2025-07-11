@@ -19,6 +19,9 @@
   font-family: "Times New Roman";
   font-size: 1.2rem;
 }
+.wa-white {
+  color: white;
+}
 .wa-hr {
   border-top: 2px solid black;
 }
@@ -31,6 +34,9 @@
 }
 .wa-blue {
   color: blue;
+}
+.wa-blue-background {
+  background-color: blue;
 }
 a {
   color: blue;

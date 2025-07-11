@@ -2,10 +2,14 @@
 {% block title %}{{ _('Pywb Error') }}{% endblock %}
 {% block header %}{% endblock %}
 {% block body %}
+{% if err_status == 451 %}
+<div class="container wa-blue-background"></div>
+{% else %}
 <div class="container text-danger error">
+{% endif %}
     <div class="row justify-content-center">
     {% if err_status == 451 %}
-        <h2 class="display-4">Tuto stránku nemůžeme zobrazit</h2>
+        <h2 class="wa-big wa-white">Tuto stránku nemůžeme zobrazit</h2>
     {% else %}
         <h2 class="display-4">Něco se nepovedlo - Pywb error</h2>
     {% endif %}
@@ -13,10 +17,10 @@
     <div class="row">
         <div class="col-12 text-center">
         {% if err_status == 451 %}
-            <p class="display-4">
+            <p class="wa-text wa-white">
                 Z důvodu autorského zákona nemůžeme tuto stránku zpřístupnit online.
                 Archivované verze této stránky jsou dostupné pouze z Referenčního centra NK ČR.
-                Pro více informací o zpřístupnění navštivte nasše často kladené dotazy.
+                Pro více informací o zpřístupnění navštivte naše často kladené dotazy.
             </p>
 
         {% elif err_status == 404 and err_details == 'coll_not_found' %}
