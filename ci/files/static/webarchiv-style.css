@@ -37,7 +37,12 @@
 }
 .wa-blue-background {
   background-color: blue;
+  min-width: 100%;
+  min-height: 100vh;
 }
 a {
   color: blue;
+}
+.wa-pad-10 {
+  padding-top: 10dvh;
 }
