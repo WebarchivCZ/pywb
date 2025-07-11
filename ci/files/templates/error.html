@@ -1,23 +1,32 @@
 {% extends "base.html" %}
-{% block title %}{{ _('Pywb Error') }}{% endblock %}
 {% block header %}{% endblock %}
 {% block body %}
 <div class="container text-danger error">
     <div class="row justify-content-center">
-        <h2 class="display-2">{{ _('Pywb Error') }}</h2>
+    {% if err_status == 451 %}
+        {% block title %}Webarchiv - Neveřejná kopie{% endblock %}
+        <h2 class="display-4">Tuto stránku nemůžeme zobrazit</h2>
+    {% else %}
+        {% block title %}{{ _('Pywb Error') }}{% endblock %}
+        <h2 class="display-4">Něco se nepovedlo - Pywb error</h2>
+    {% endif %}
     </div>
     <div class="row">
         <div class="col-12 text-center">
         {% if err_status == 451 %}
-            <p class="lead">{% trans %}Access Blocked to {{ err_msg }}{% endtrans %}</p>
+            <p class="display-4">
+                Z důvodu autorského zákona nemůžeme tuto stránku zpřístupnit online.
+                Archivované verze této stránky jsou dostupné pouze z Referenčního centra NK ČR.
+                Pro více informací o zpřístupnění navštivte nasše často kladené dotazy.
+            </p>
 
         {% elif err_status == 404 and err_details == 'coll_not_found' %}
-            <p>{% trans %}Collection not found: <b>{{ err_msg }}{% endtrans %}</b></p>
+            <p>404 - Kolekce nenalezena: <b>{{ err_msg }}</b></p>
 
-            <p><a href="/{{ env.pywb_lang | default('') }}">{{ _('See list of valid collections') }}</a></p>
+            <p><a href="/{{ env.pywb_lang | default('') }}">Přejít na seznam dostupných kolekcí</a></p>
 
         {% elif err_status == 404 and err_details == 'static_file_not_found' %}
-            <p>{% trans %}Static file not found: <b>{{ err_msg }}{% endtrans %}</b></p>
+            <p>404 - Soubor nenalezen: <b>{{ err_msg }}</b></p>
 
         {% else %}
 
