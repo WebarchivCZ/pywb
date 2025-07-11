@@ -1,13 +1,12 @@
 {% extends "base.html" %}
+{% block title %}{{ _('Pywb Error') }}{% endblock %}
 {% block header %}{% endblock %}
 {% block body %}
 <div class="container text-danger error">
     <div class="row justify-content-center">
     {% if err_status == 451 %}
-        {% block title %}Webarchiv - Neveřejná kopie{% endblock %}
         <h2 class="display-4">Tuto stránku nemůžeme zobrazit</h2>
     {% else %}
-        {% block title %}{{ _('Pywb Error') }}{% endblock %}
         <h2 class="display-4">Něco se nepovedlo - Pywb error</h2>
     {% endif %}
     </div>
