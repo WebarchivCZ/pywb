@@ -188,7 +188,8 @@ export -f create_collection_structure
 export -f create_collection
 
 # Find splitting argument from find outuput in exec should be safer according to stracktrace
-find ${SEARCH_ROOT_DIR} -type f \( -name "*.warc.gz" -o -name "*.arc.gz" -o -name "*.warc" \) -exec bash -c 'create_collection_structure "$0"' {} \;
+# Don't descend into /profile/ folders (in manuals) to avoid Permission denied errors
+find ${SEARCH_ROOT_DIR} -path '*/profile/*' -prune -o -type f \( -name "*.warc.gz" -o -name "*.arc.gz" -o -name "*.warc" \) -exec bash -c 'create_collection_structure "$0"' {} \;
 
 echo "Processing finished. Break Over."
 
