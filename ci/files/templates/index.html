@@ -20,7 +20,7 @@
         <h4>Ostatní kolekce:</h4>
     </div>
     <div class="row d-flex flex-wrap">
-        {% for year in range(5, 26) | reverse %}
+        {% for year in range(5, 27) | reverse %}
         {% set year_str = "{:02d}".format(year) %}
         <div class="list-group m-2">
             {% for route in routes | sort %}
