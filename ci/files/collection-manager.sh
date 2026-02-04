@@ -113,7 +113,7 @@ mkdir -p ${COLLECTION_PATH}/static
 mkdir -p ${COLLECTION_PATH}/logs
 mkdir -p ${COLLECTION_PATH}/tmp
 if [ ! -L ${COLLECTION_PATH}/archive/${ARCHIVE_NAME} ]; then
-	ln -s ${ARCHIVE_PATH} ${COLLECTION_PATH}/archive/
+	ln -sf ${ARCHIVE_PATH} ${COLLECTION_PATH}/archive/
 fi
 }
 
