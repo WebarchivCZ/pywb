@@ -171,6 +171,10 @@ case "${ARCHIVE_PATH_DIR}" in
 		COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Totals
 		create_collection
 		;;
+	*Linkra*)
+		COLLECTION_PATH=${COLLECTIONS_ROOT_DIR}${ARCHIVE_YEAR}-Linkra
+		create_collection
+		;;
 	# *)
 	# 	# echo Standard Collection
 	# 	create_collection
