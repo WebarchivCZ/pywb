@@ -68,7 +68,7 @@ case $param in
 			;;
 		21)
 			ARCHIVE_YEAR=21
-			SEARCH_ROOT_DIR="/mnt/archive/21"
+			SEARCH_ROOT_DIR="/mnt/archive/KWA2021"
 			;;
 		22)
 			ARCHIVE_YEAR=22
