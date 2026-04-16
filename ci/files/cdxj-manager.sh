@@ -17,10 +17,15 @@ Example: ./collection-manager.sh 07-cz2007
 EOF
 }
 
+export FORCE_REINDEX="false"
+
 if [ $# -eq 0 ]; then
         script_usage
         exit 0
-elif [  $# -gt 1 ]; then
+elif [ $# -eq 2 ]; then
+        if [ "$2" = "force_reindex" ]; then
+                export FORCE_REINDEX="true"
+elif [ $# -gt 2 ]; then
         echo -e "Error! Too many parameters provided!\n"
         script_usage
         exit 1
@@ -44,10 +49,10 @@ create_index () {
         ARCHIVE_PATH="$1"
         ARCHIVE_NAME="$(basename ${ARCHIVE_PATH})"
         INDEX_PATH="${COLLECTION_TMP_PATH}/${ARCHIVE_NAME}.cdxj"
-        if [ -f ${INDEX_PATH} ]; then
+        if [ -f ${INDEX_PATH} ] && [ "$FORCE_REINDEX" != "true" ]; then
                 echo "[$(date -u --iso-8601=seconds)] Index for ${ARCHIVE_NAME} already found in collection. No action required." \
                         >> ${COLLECTION_LOGS_PATH}/$(date -u --iso-8601).log
-        elif [ -f ${INDEX_BACKUP_PATH}/${ARCHIVE_NAME}.cdxj ]; then
+        elif [ -f ${INDEX_BACKUP_PATH}/${ARCHIVE_NAME}.cdxj ] && [ "$FORCE_REINDEX" != "true" ]; then
                 echo "[$(date -u --iso-8601=seconds)] Index for ${ARCHIVE_NAME} already exists in cdxj-archive. Making local copy instead of indexing." \
                         >> ${COLLECTION_LOGS_PATH}/$(date -u --iso-8601).log
                 cp ${INDEX_BACKUP_PATH}/${ARCHIVE_NAME}.cdxj ${INDEX_PATH}
