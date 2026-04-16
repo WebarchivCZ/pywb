@@ -25,6 +25,7 @@ if [ $# -eq 0 ]; then
 elif [ $# -eq 2 ]; then
         if [ "$2" = "force_reindex" ]; then
                 export FORCE_REINDEX="true"
+        fi
 elif [ $# -gt 2 ]; then
         echo -e "Error! Too many parameters provided!\n"
         script_usage
