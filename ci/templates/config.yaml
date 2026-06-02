@@ -75,4 +75,5 @@ info_json: collinfo.json
 
 # Other Settings
 enable_memento: true
+enable_cdx_api: true
 # rules_config: pkg://pywb/rules.yaml
