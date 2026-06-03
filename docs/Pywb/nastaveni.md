@@ -39,7 +39,7 @@ V současné době se archiv obvykle skládá z následujících strategií skli
 
 ### Host
 
-- `/index/` - SSD disk připojený pro rychlou práci s indexem
+- `/mnt/index/` - SSD disk připojený pro rychlou práci s indexem
 - `/mnt/archive/` - Obsahuje sklizené archivy pro každý rok. Každý rok je připojený přes NFSv4.
 
 ### PyWb docker image
