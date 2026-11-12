@@ -77,3 +77,8 @@ info_json: collinfo.json
 enable_memento: true
 enable_cdx_api: true
 # rules_config: pkg://pywb/rules.yaml
+
+default_locale: cs
+locales:
+  - cs
+  - en
