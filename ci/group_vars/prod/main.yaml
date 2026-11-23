@@ -5,7 +5,7 @@ pywb_traefik_configuration: "traefik.http.routers.pywb-prod.rule=Host(`pywb.weba
 
 # Directory where pywb is installed
 pywb_dir: /home/pywb-prod
-pywb_tag: 2.8.3
+pywb_tag: 2.11.1
 
 # Who owns directories & files
 owner: pywb-prod
